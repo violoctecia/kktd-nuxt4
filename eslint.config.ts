@@ -34,12 +34,6 @@ export default withNuxt(
 
 			'vue/no-multiple-template-root': 'off',
 			'vue/attributes-order': 'off',
-			'vue/multi-word-component-names': [
-				'error',
-				{
-					ignores: ['index', 'default', 'error', '[id]'],
-				},
-			],
 			'vue/no-undef-components': [
 				'error',
 				{
@@ -47,6 +41,17 @@ export default withNuxt(
 						'^Nuxt', // NuxtPage, NuxtLayout, NuxtLink...
 						'^ClientOnly$',
 					],
+				},
+			],
+		},
+	},
+	{
+		files: ['components/**/*.vue', 'layouts/**/*.vue'],
+		rules: {
+			'vue/multi-word-component-names': [
+				'error',
+				{
+					ignores: ['index', 'default', 'error'],
 				},
 			],
 		},

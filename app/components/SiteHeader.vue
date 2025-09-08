@@ -3,10 +3,17 @@
 		<div class="container flex items-center justify-between gap-4 py-2 md:py-4">
 			<div class="logo flex items-center gap-4">
 				<nuxt-link to="/" class="flex" @click="isMenuToggled = false">
-					<nuxt-img preload class="h-[32px] min-w-[82px]" width="82" height="32" src="/img/logo.webp" alt="Казанский Колледж Технологии и Дизайна" />
+					<nuxt-img
+						priority
+						class="h-[32px] min-w-[82px]"
+						width="82"
+						height="32"
+						src="/img/logo.webp"
+						alt="Казанский Колледж Технологии и Дизайна"
+					/>
 				</nuxt-link>
 				<div class="hidden flex-col lg:flex">
-					<h1 class="text-lg font-bold leading-4">Казанский Колледж Технологии и Дизайна</h1>
+					<p class="text-lg font-bold leading-4">Казанский Колледж Технологии и Дизайна</p>
 					<p class="text-sm">Профессиональное образование в сфере IT и мануфактуры</p>
 				</div>
 			</div>
@@ -31,7 +38,12 @@
 				</ul>
 			</nav>
 
-			<button @click="isMenuToggled = !isMenuToggled" type="button" class="burger-icon flex md:hidden" :class="{ open: isMenuToggled }">
+			<button
+				@click="isMenuToggled = !isMenuToggled"
+				type="button"
+				class="burger-icon flex md:hidden"
+				:class="{ open: isMenuToggled }"
+			>
 				<span></span>
 				<span></span>
 				<span></span>
