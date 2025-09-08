@@ -1,8 +1,8 @@
 <template>
 	<header class="sticky top-0 z-50 bg-primaryDark text-background">
-		<div class="container flex items-center justify-between gap-4 py-4">
+		<div class="container flex items-center justify-between gap-4 py-2 md:py-4">
 			<div class="logo flex items-center gap-4">
-				<nuxt-link to="/" class="flex">
+				<nuxt-link to="/" class="flex" @click="isMenuToggled = false">
 					<nuxt-img preload class="h-[32px] min-w-[82px]" width="82" height="32" src="/img/logo.webp" alt="Казанский Колледж Технологии и Дизайна" />
 				</nuxt-link>
 				<div class="hidden flex-col lg:flex">
@@ -11,16 +11,27 @@
 				</div>
 			</div>
 
-			<nav class="hidden items-center md:flex">
-				<ul class="flex items-center">
-					<li v-for="i in navItems" :key="i.label" class="flex">
-						<nuxt-link class="whitespace-nowrap rounded-lg px-2 py-2 text-base hover:bg-primaryLight/10" v-if="i.href" :href="i.href">{{ i.label }}</nuxt-link>
-						<MainButton class="ml-2" v-else>{{ i.label }}</MainButton>
+			<nav
+				class="items-center bg-primaryDark md:static md:flex"
+				:class="isMenuToggled ? 'absolute left-0 top-full flex w-full justify-center rounded-b-lg pb-4' : 'hidden'"
+				@click="isMenuToggled = false"
+			>
+				<ul class="flex flex-col items-center md:flex-row" :class="isMenuToggled ? 'w-full' : ''">
+					<li v-for="i in navItems" :key="i.label" class="flex justify-center" :class="isMenuToggled ? 'w-full' : ''">
+						<nuxt-link
+							class="whitespace-nowrap rounded-lg px-2 py-2 text-center text-base hover:bg-primaryLight/10"
+							:class="isMenuToggled ? 'w-full text-sm' : ''"
+							v-if="i.href"
+							:href="i.href"
+						>
+							{{ i.label }}
+						</nuxt-link>
+						<MainButton class="ml-2" :class="isMenuToggled ? '!mx-4 mt-4 w-full' : ''" v-else>{{ i.label }}</MainButton>
 					</li>
 				</ul>
 			</nav>
 
-			<button @click="isMenuToggled = !isMenuToggled" class="burger-icon flex md:hidden" :class="{ open: isMenuToggled }">
+			<button @click="isMenuToggled = !isMenuToggled" type="button" class="burger-icon flex md:hidden" :class="{ open: isMenuToggled }">
 				<span></span>
 				<span></span>
 				<span></span>
@@ -46,8 +57,8 @@ const navItems = [
 
 <style scoped lang="scss">
 .burger-icon {
-	width: 32px;
-	height: 24px;
+	width: 24px;
+	height: 18px;
 	flex-direction: column;
 	justify-content: space-between;
 
@@ -56,11 +67,12 @@ const navItems = [
 		height: 3px;
 		border-radius: 2px;
 		transition: all 0.2s;
+		opacity: 1;
 	}
 
 	&.open {
 		span:nth-child(1) {
-			transform: translateY(9px) rotate(45deg);
+			transform: translateY(7px) rotate(45deg);
 		}
 
 		span:nth-child(2) {
@@ -68,7 +80,7 @@ const navItems = [
 		}
 
 		span:nth-child(3) {
-			transform: translateY(-12px) rotate(-45deg);
+			transform: translateY(-8px) rotate(-45deg);
 		}
 	}
 }
