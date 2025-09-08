@@ -1,0 +1,7 @@
+echo "Husky ===> 🧪 Executing Prettier ..."
+bun prettier
+
+echo "Husky ===> 🧪 Executing ESLint fix ..."
+bun lint:fix
+
+echo "Husky ===> 🎉 Lint & Prettier complete!"
