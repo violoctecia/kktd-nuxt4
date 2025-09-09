@@ -14,5 +14,6 @@ export default {
 		},
 		'removeDimensions',
 		'removeAttrs',
+		'removeComments',
 	],
 };

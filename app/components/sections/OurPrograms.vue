@@ -1,21 +1,16 @@
 <template>
 	<section id="programs" class="container pt-16 md:pt-24">
 		<h2 class="h2">Наши программы</h2>
-		<div class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-			<div class="group relative overflow-hidden rounded-lg bg-white/90" v-for="item in items" :key="item.alt">
-				<div class="aspect-[400/200] overflow-hidden">
-					<nuxt-img
-						class="w-full transition-all duration-700 group-hover:scale-105"
-						:src="item.img"
-						:alt="item.alt"
-						loading="lazy"
-						:placeholder="[400, 200, 75, 5]"
-						width="400"
-						height="200"
-						format="webp"
-					/>
-				</div>
-				<div class="flex flex-col p-4">
+		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-x-4 sm:gap-y-8 lg:grid-cols-3">
+			<MainCard
+				v-for="item in items"
+				:key="item.alt"
+				:img-src="item.img"
+				:img-alt="item.alt"
+				:href-text="item.title"
+				:href="item.href"
+			>
+				<template #content>
 					<div class="mb-4 flex items-start justify-between group-hover:text-primary md:h-[72px]">
 						<h3 class="max-w-[calc(100%-40px)] text-base font-bold leading-5 md:line-clamp-3 md:text-lg md:leading-6">
 							{{ item.title }}
@@ -23,15 +18,15 @@
 						<icon-sprite class="mt-[2px] aspect-square min-w-6 max-w-6" name="arrow-right-short" />
 					</div>
 					<p class="mt-auto text-sm leading-4 text-black/80 md:text-base md:leading-5">{{ item.text }}</p>
-				</div>
-				<nuxt-link :to="item.href" class="absolute inset-0 z-10" :aria-label="item.title" :title="item.title" />
-			</div>
+				</template>
+			</MainCard>
 		</div>
 	</section>
 </template>
 
 <script setup lang="ts">
 import IconSprite from '~/components/IconSprite.vue';
+import MainCard from '~/components/ui/MainCard.vue';
 
 interface Program {
 	img: string;
