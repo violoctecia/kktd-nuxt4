@@ -9,15 +9,10 @@
 				:img-alt="item.alt"
 				:href-text="item.title"
 				:href="item.href"
+				:title="item.title"
 			>
 				<template #content>
-					<div class="mb-4 flex items-start justify-between group-hover:text-primary md:h-[72px]">
-						<h3 class="max-w-[calc(100%-40px)] text-base font-bold leading-5 md:line-clamp-3 md:text-lg md:leading-6">
-							{{ item.title }}
-						</h3>
-						<icon-sprite class="mt-[2px] aspect-square min-w-6 max-w-6" name="arrow-right-short" />
-					</div>
-					<p class="mt-auto text-sm leading-4 text-black/80 md:text-base md:leading-5">{{ item.text }}</p>
+					<p class="mt-auto text-sm leading-4 text-black/80 md:text-base md:leading-5" itemprop="description">{{ item.text }}</p>
 				</template>
 			</MainCard>
 		</div>
@@ -25,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import IconSprite from '~/components/IconSprite.vue';
 import MainCard from '~/components/ui/MainCard.vue';
 
 interface Program {

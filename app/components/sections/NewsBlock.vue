@@ -9,10 +9,11 @@
 				:img-alt="item.alt"
 				:href-text="item.title"
 				:href="item.href"
+				:title="item.title"
 			>
 				<template #before-title>
 					<div class="mb-3 flex flex-wrap items-center gap-2">
-						<p class="text-sm text-primary">{{ item.date }}</p>
+						<time class="text-sm text-primary" :datetime="toISODate(item.date)" itemprop="datePublished">{{ item.date }}</time>
 						<div v-if="item.categories" class="flex items-center gap-2">
 							<span class="rounded-full bg-background px-2 py-1 text-xs" v-for="ctg in item.categories" :key="ctg">
 								{{ ctg }}
@@ -21,13 +22,7 @@
 					</div>
 				</template>
 				<template #content>
-					<div class="mb-4 flex items-start justify-between group-hover:text-primary md:h-[72px]">
-						<h3 class="max-w-[calc(100%-40px)] text-base font-bold leading-5 md:line-clamp-3 md:text-lg md:leading-6">
-							{{ item.title }}
-						</h3>
-						<icon-sprite class="mt-[2px] aspect-square min-w-6 max-w-6" name="arrow-right-short" />
-					</div>
-					<p class="mt-auto text-sm leading-4 text-black/80 md:text-base md:leading-5">{{ item.text }}</p>
+					<p class="mt-auto text-sm leading-4 text-black/80 md:text-base md:leading-5" itemprop="description">{{ item.text }}</p>
 				</template>
 			</MainCard>
 		</div>
@@ -35,13 +30,14 @@
 </template>
 
 <script setup lang="ts">
-import IconSprite from '~/components/IconSprite.vue';
+import type { rusDate } from '#shared/types';
 import MainCard from '~/components/ui/MainCard.vue';
+import { toISODate } from '~/utils/toISODate';
 
 interface NewItem {
 	img: string;
 	alt: string;
-	date: string;
+	date: rusDate;
 	title: string;
 	text: string;
 	href: string;
