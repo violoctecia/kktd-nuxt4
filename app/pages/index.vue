@@ -1,5 +1,6 @@
 <template>
 	<main>
+		<HeroBlock />
 		<AboutBlock />
 		<OurPrograms />
 		<OurAdvantages />
@@ -12,6 +13,7 @@ import AboutBlock from '~/components/sections/AboutBlock.vue';
 import NewsBlock from '~/components/sections/NewsBlock.vue';
 import OurAdvantages from '~/components/sections/OurAdvantages.vue';
 import OurPrograms from '~/components/sections/OurPrograms.vue';
+import HeroBlock from '../components/sections/HeroBlock.vue';
 
 useHead({
 	title: 'Казанский Колледж Технологии и Дизайна | Профессиональное образование',

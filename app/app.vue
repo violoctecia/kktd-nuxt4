@@ -1,9 +1,11 @@
 <template>
 	<SiteHeader />
 	<NuxtLayout>
-		<NuxtPage />
+	 <NuxtPage />
 	</NuxtLayout>
-</template>
+				<SiteFooter/> 
+ </template>
+ 
 
 <script setup lang="ts">
 import SiteHeader from '~/components/SiteHeader.vue';
