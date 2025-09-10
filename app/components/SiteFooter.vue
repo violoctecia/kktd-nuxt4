@@ -83,7 +83,7 @@ const year: number = new Date().getFullYear();
                         <NuxtLink to="/faq">Частые вопросы</NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/rating">Рейтинг абитуриентов</NuxtLink>
+                        <NuxtLink to="/app/pages/abiturient.vue">Рейтинг абитуриентов</NuxtLink>
                     </li>
                     <li>
                         <NuxtLink to="/enrolled">Список предпочтительных к зачислению</NuxtLink>
