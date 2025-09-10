@@ -1,22 +1,28 @@
 <template>
-    <div class="flex min-h-screen flex-col">
-        <main class="container mx-auto flex-1 space-y-6 px-4 pt-24">
-            <h2 class="section-title text-primary-dark mb-6">Часто задаваемые вопросы</h2>
-            <FaqItem
-                v-for="(item, index) in faqItems"
-                :key="index"
-                :question="item.question"
-                :answer-text="item.answerText"
-                :answer-list="item.answerList"
-            />
-            <ContactInfo />
-        </main>
-    </div>
+    <main>
+        <SiteBreadcrumbs :items="breadcrumbs" />
+        <div class="container">
+            <h1 class="h1">Часто задаваемые вопросы</h1>
+            <div class="list flex flex-col gap-y-6">
+                <FaqItem
+                    v-for="(item, index) in faqItems"
+                    :key="index"
+                    :question="item.question"
+                    :answer-text="item.answerText"
+                    :answer-list="item.answerList"
+                />
+                <ContactInfo />
+            </div>
+        </div>
+    </main>
 </template>
 
 <script lang="ts" setup>
 import ContactInfo from '@/components/sections/ContactInfo.vue';
 import FaqItem from '@/components/sections/FaqItem.vue';
+import SiteBreadcrumbs from '~/components/SiteBreadcrumbs.vue';
+
+const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'FAQ' }];
 
 interface FAQItem {
     question: string;
@@ -84,17 +90,6 @@ const faqItems: FAQItem[] = [
 </script>
 
 <style scoped>
-.section-title {
-    font-size: 1.8rem;
-    font-weight: 600;
-    position: relative;
-    padding-bottom: 0.5rem;
-}
-
-.faq-question {
-    font-size: 1.2rem;
-}
-
 .faq-answer ul {
     list-style-type: disc;
     margin-left: 1.5rem;
