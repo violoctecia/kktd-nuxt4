@@ -10,9 +10,12 @@
 				:href-text="item.title"
 				:href="item.href"
 				:title="item.title"
+				card-title-tag="h3"
 			>
 				<template #content>
-					<p class="mt-auto text-sm leading-4 text-black/80 md:text-base md:leading-5" itemprop="description">{{ item.text }}</p>
+					<p class="mt-auto text-sm leading-4 text-black/80 md:text-base md:leading-5" itemprop="description">
+						{{ item.text }}
+					</p>
 				</template>
 			</MainCard>
 		</div>

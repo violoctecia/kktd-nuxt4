@@ -1,7 +1,7 @@
 <template>
-	<section id="about" class="container pt-16 text-black md:pt-24">
+	<section id="about" class="container__sm pt-16 text-black md:pt-24">
 		<h2 class="h2">О нашем колледже</h2>
-		<p class="mx-auto max-w-5xl text-base">
+		<p class="mb-8 text-base">
 			Казанский колледж технологии и дизайна (ранее Казанский техникум легкой промышленности) создан 1 мая 1920 года. Колледж является
 			единственным в России учебным заведением, готовящим кадры для меховой и валяльно-войлочной отрасли. Учебное заведение хорошо
 			известно за пределами республики Татарстан. В поисках специалистов сюда приезжают представители меховых и валяльно-войлочных
@@ -11,9 +11,12 @@
 			<br />
 			Наши студенты получают доступ к современному оборудованию.
 		</p>
+		<MainButton href="/about" class="mx-auto w-fit">Читать больше</MainButton>
 	</section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import MainButton from '~/components/ui/MainButton.vue';
+</script>
 
 <style scoped></style>

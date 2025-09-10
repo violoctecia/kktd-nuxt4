@@ -1,6 +1,6 @@
 <template>
-	<div class="container mt-8">
-		<ul itemscope itemtype="https://schema.org/BreadcrumbList" class="flex items-center gap-2 py-4">
+	<div class="container my-8 md:my-12">
+		<ul itemscope itemtype="https://schema.org/BreadcrumbList" class="flex items-center gap-2">
 			<li
 				v-for="(i, idx) in items"
 				:key="idx"
@@ -29,7 +29,7 @@
 <script setup lang="ts">
 interface BreadcrumbItem {
 	label: string;
-	href: string;
+	href?: string;
 }
 
 defineProps<{ items: BreadcrumbItem[] }>();

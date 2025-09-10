@@ -4,7 +4,7 @@
 			<nuxt-img
 				class="w-full transition-all duration-700 group-hover:scale-105"
 				:src="imgSrc"
-				:alt="imgAlt || ''"
+				:alt="imgAlt"
 				loading="lazy"
 				:placeholder="[400, 200, 75, 5]"
 				width="400"
@@ -15,34 +15,36 @@
 		</div>
 		<div class="flex flex-col p-4">
 			<slot name="before-title"></slot>
-			<div v-if="title" class="mb-4 flex items-start justify-between gap-2 group-hover:text-primary md:h-[72px]">
-				<h3 class="card-title">
-					<nuxt-link v-if="href" :to="href" :title="hrefText">{{ title }}</nuxt-link>
-					<span v-else :title="hrefText">{{ title }}</span>
-				</h3>
+
+			<div
+				class="relative z-20 mb-4 flex cursor-pointer items-start justify-between gap-2 group-hover:text-primary md:h-[72px]"
+				:title="hrefText"
+			>
+				<component :is="cardTitleTag" class="text-base font-bold leading-5 md:line-clamp-3 md:text-lg md:leading-6">
+					<nuxt-link :to="href">{{ title }}</nuxt-link>
+				</component>
 
 				<icon-sprite class="mt-[2px] aspect-square min-w-6 max-w-6" name="arrow-right-short" />
 			</div>
+
 			<slot name="content"></slot>
 		</div>
-		<nuxt-link v-if="href && hrefText" :to="href" class="absolute inset-0 z-10" :aria-label="hrefText" />
+		<nuxt-link :to="href" class="absolute inset-0 z-10" :aria-label="hrefText" />
 	</article>
 </template>
 
 <script setup lang="ts">
+import type { titleTag } from '#shared/types';
 import IconSprite from '~/components/IconSprite.vue';
 
 defineProps<{
-	href?: string;
-	hrefText?: string;
+	href: string;
+	hrefText: string;
 	imgSrc: string;
-	imgAlt?: string;
-	title?: string;
+	imgAlt: string;
+	title: string;
+	cardTitleTag: titleTag;
 }>();
 </script>
 
-<style scoped>
-.card-title {
-	@apply relative z-20 text-base font-bold leading-5 md:line-clamp-3 md:text-lg md:leading-6;
-}
-</style>
+

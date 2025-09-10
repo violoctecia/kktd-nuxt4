@@ -58,7 +58,7 @@ import MainButton from '~/components/ui/MainButton.vue';
 const isMenuToggled = ref(false);
 
 const navItems = [
-	{ label: 'О колледже', href: '/#about' },
+	{ label: 'О колледже', href: '/about' },
 	{ label: 'Программы', href: '/#programs' },
 	{ label: 'Новости', href: '/news' },
 	{ label: 'FAQ', href: '/faq' },

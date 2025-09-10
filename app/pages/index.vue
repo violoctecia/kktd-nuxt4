@@ -4,15 +4,20 @@
 		<AboutBlock />
 		<OurPrograms />
 		<OurAdvantages />
-		<NewsBlock :items="newsItems" heading="Новости и события" />
+		<section class="container pt-16 md:pt-24">
+			<h2 class="h2">Последние новости</h2>
+			<NewsList :items="newsItems" tag="h3" />
+			<MainButton href="/news" class="mx-auto mt-8 w-fit">Все новости</MainButton>
+		</section>
 	</main>
 </template>
 
 <script setup lang="ts">
 import AboutBlock from '~/components/sections/AboutBlock.vue';
-import NewsBlock from '~/components/sections/NewsBlock.vue';
+import NewsList from '~/components/sections/NewsList.vue';
 import OurAdvantages from '~/components/sections/OurAdvantages.vue';
 import OurPrograms from '~/components/sections/OurPrograms.vue';
+import MainButton from '~/components/ui/MainButton.vue';
 import HeroBlock from '../components/sections/HeroBlock.vue';
 
 useHead({

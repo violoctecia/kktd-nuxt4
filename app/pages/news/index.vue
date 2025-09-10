@@ -1,23 +1,22 @@
 <template>
 	<main>
 		<SiteBreadcrumbs :items="breadcrumbs" />
-		<h1 class="container pt-8 text-center text-2xl font-bold md:text-3xl lg:text-5xl">Новости колледжа</h1>
-		<NewsBlock :items="newsItems" />
+		<section class="container">
+			<h1 class="h1">Новости колледжа</h1>
+			<NewsList :items="newsItems" tag="h2" />
+		</section>
 	</main>
 </template>
 
 <script setup lang="ts">
-import NewsBlock from '~/components/sections/NewsBlock.vue';
 import SiteBreadcrumbs from '~/components/SiteBreadcrumbs.vue';
+import NewsList from '~/components/sections/NewsList.vue';
 
 useHead({
 	title: 'Новости | Казанский Колледж Технологии и Дизайна | Профессиональное образование',
 });
 
-const breadcrumbs = [
-	{ label: 'Главная', href: '/' },
-	{ label: 'Новости колледжа', href: '/news' },
-];
+const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'Новости колледжа' }];
 const newsItems = [
 	{
 		img: '/img/hackathon.webp',

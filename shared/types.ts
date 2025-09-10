@@ -1,1 +1,1 @@
-export type rusDate = `${number} ${string} ${number}`;
+export type titleTag = 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
