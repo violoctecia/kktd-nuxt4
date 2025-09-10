@@ -1,5 +1,5 @@
 <template>
-	<SvgIcon :name="name" />
+    <SvgIcon :name="name" />
 </template>
 
 <script setup lang="ts">
