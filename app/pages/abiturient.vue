@@ -1,7 +1,7 @@
 <template>
-	<main>
-		<p class="container">will be developed</p>
-	</main>
+    <main>
+        <p class="container">will be developed</p>
+    </main>
 </template>
 
 <script setup lang="ts"></script>
