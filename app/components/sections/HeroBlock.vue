@@ -1,5 +1,5 @@
 <template>
-	<section class="relative mt-16 h-[80vh] min-h-[500px] overflow-hidden">
+	<section class="relative h-[80vh] min-h-[500px] overflow-hidden">
 		<div class="bg-primary-dark/70 absolute inset-0 z-0"></div>
 
 		<div
@@ -11,14 +11,10 @@
 		></div>
 
 		<div class="relative z-20 flex h-full flex-col items-center justify-center px-4 text-center text-white">
-			<h2 class="mb-4 text-3xl font-bold md:text-5xl">{{ slides[currentSlide]?.title }}</h2>
+			<h1 class="mb-4 text-3xl font-bold md:text-5xl">{{ slides[currentSlide]?.title }}</h1>
 			<p class="mb-6 max-w-xl text-lg md:text-xl">{{ slides[currentSlide]?.subtitle }}</p>
-			<a
-				href="#programs"
-				class="btn bg-primary-light text-primary-dark relative inline-block min-w-[120px] rounded px-6 py-2 font-bold transition-all hover:-translate-y-1 hover:bg-white hover:shadow-md"
-			>
-				Узнать больше
-			</a>
+
+			<MainButton href="/#programs">Узнать больше</MainButton>
 		</div>
 
 		<button
@@ -46,6 +42,8 @@
 </template>
 
 <script lang="ts" setup>
+import MainButton from '~/components/ui/MainButton.vue';
+
 interface Slide {
 	image: string;
 	title: string;
@@ -91,34 +89,3 @@ onUnmounted(() => {
 	clearInterval(intervalId);
 });
 </script>
-
-<style scoped>
-.btn::after {
-	content: '';
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 5px;
-	height: 5px;
-	background: rgba(255, 255, 255, 0.5);
-	opacity: 0;
-	border-radius: 100%;
-	transform: scale(1, 1) translate(-50%, -50%);
-	transform-origin: 50% 50%;
-}
-
-.btn:focus:not(:active)::after {
-	animation: ripple 0.6s ease-out;
-}
-
-@keyframes ripple {
-	0% {
-		transform: scale(0, 0);
-		opacity: 0.5;
-	}
-	100% {
-		transform: scale(20, 20);
-		opacity: 0;
-	}
-}
-</style>

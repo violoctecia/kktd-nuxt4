@@ -46,5 +46,3 @@ defineProps<{
 	cardTitleTag: titleTag;
 }>();
 </script>
-
-
