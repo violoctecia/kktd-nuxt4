@@ -1,23 +1,22 @@
-### Usage Information
+## Краткая инструкция по работе
+Для начала работы у вас должент быть установлен **Node.js** 22+ версии, документация Nuxt - https://nuxt.com/docs/4.x/guide
 
-```bash
-# install dependencies
-bun install
+- Скрипты в Vue файлах пишем методом composition api 
+- В проекте подключен модуль @nuxt/image для оптимизаций картинок в рантайме, модуль автоматически может конвертировать картинки в webp формат, генерировать плейсхолдеры, прелоадить картинки и тд. Используйте компонент <nuxt-img />
+- Крайне не желательно использовать картинки в css
+- SVG иконки, которые могут встречаться на страницах много раз используем в спрайте: кладем ориг иконку в /app/assets/svg/original/, оптимизируем и используем компонент [IconSprite.vue](app/components/IconSprite.vue)
+- В проекте настроен форматтинг и линтер кода, команды: <br/>
+  `pnpm prettier` - отформатирует код <br/>
+`pnpm lint` - проверит код на ошибки и предупреждения
 
-# start the development server
-bun dev
+### Основные команды для работы
+- Установка - `pnpm i`
+- Запуск локального сервера - `pnpm dev`
+- Сборка проекта - `pnpm build`
+- Оптимизация SVG иконок в директории /app/assets/svg/original/ - `pnpm svgo` <br/>
+  Все оптимизированные иконки попадают в /app/assets/svg/optimized/ <br/><br/>
+  **Важно:** если иконка не используется часто (например: 1 раз за весь проект) - после оптимизации удалите ее с /app/assets/svg/ <br/>
+  и переместите оптимизированный вариант либо в /public, либо используйте прямо в разметке в виде svg кода
 
-# build the application for production and start
-bun build
-bun start
 
-# linting
-bun lint
-bun lint:fix
 
-# formatting
-bun prettier
-
-# optimize svg icons in app/assets/svg/original/
-bun svgo
-```

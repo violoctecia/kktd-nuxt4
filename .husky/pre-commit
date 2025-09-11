@@ -1,7 +1,2 @@
-echo "Husky ===> 🧪 Executing Prettier ..."
-bun prettier
-
-echo "Husky ===> 🧪 Executing ESLint fix ..."
-bun lint:fix
-
-echo "Husky ===> 🎉 Lint & Prettier complete!"
+echo "Husky ===> 🧪 Running lint-staged ..."
+npx --no-install lint-staged --allow-empty
