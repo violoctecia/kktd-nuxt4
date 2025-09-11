@@ -1,21 +1,21 @@
 <template>
-    <button :type="type ? type : 'button'" class="main-btn" v-if="!href">
-        <slot></slot>
-    </button>
-    <nuxt-link class="main-btn" v-else :to="href">
-        <slot></slot>
-    </nuxt-link>
+	<button :type="type ? type : 'button'" class="main-btn" v-if="!href">
+		<slot></slot>
+	</button>
+	<nuxt-link class="main-btn" v-else :to="href">
+		<slot></slot>
+	</nuxt-link>
 </template>
 
 <script setup lang="ts">
 defineProps<{
-    href?: string;
-    type?: 'button' | 'submit';
+	href?: string;
+	type?: 'button' | 'submit';
 }>();
 </script>
 
 <style>
 .main-btn {
-    @apply flex justify-center gap-2 whitespace-nowrap rounded-lg bg-secondary px-4 py-2 text-center text-base text-background transition-all duration-200 hover:bg-secondary/80;
+	@apply flex justify-center gap-2 whitespace-nowrap rounded-lg bg-secondary px-4 py-2 text-center text-base text-background transition-all duration-200 hover:bg-secondary/80;
 }
 </style>
