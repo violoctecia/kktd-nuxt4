@@ -1,118 +1,25 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
 
-export default defineComponent({
-	name: 'AdmissionPlan',
-	data() {
-		return {
-			tableData: [
-				{
-					funding: 'Бюджет',
-					specialty: 'Информационные системы и программирование (09.02.07)',
-					qualification: 'специалист по информационным системам',
-					base: '9',
-					form: 'Очная',
-					places: '25',
-				},
-				{
-					funding: 'Бюджет',
-					specialty: 'Обеспечение информационной безопасности телекоммуникационных систем (10.02.04)',
-					qualification: '-',
-					base: '9',
-					form: 'Очная',
-					places: '25',
-				},
-				{
-					funding: 'Бюджет',
-					specialty: 'Конструирование, моделирование и технология изделий легкой промышленности (29.02.10)',
-					qualification: '- (мех 25, кожа 25, швейные изделия 50)',
-					base: '9',
-					form: 'Очная',
-					places: '100',
-				},
-				{
-					funding: 'Бюджет',
-					specialty: 'Конструирование, моделирование и технология изделий легкой промышленности (29.02.10)',
-					qualification: '- (швейные изделия)',
-					base: '11',
-					form: 'Очная',
-					places: '25',
-				},
-				{
-					funding: 'Бюджет',
-					specialty: 'Технология кожи и меха (29.02.02)',
-					qualification: '-',
-					base: '9',
-					form: 'Очная',
-					places: '20',
-				},
-				{
-					funding: 'Бюджет',
-					specialty: 'Технология текстильных изделий (29.02.05)',
-					qualification: '-',
-					base: '9',
-					form: 'Очная',
-					places: '20',
-				},
-				{ funding: 'Бюджет', specialty: 'Торговое дело (38.02.08)', qualification: '-', base: '9', form: 'Очная', places: '25' },
-				{ funding: 'Бюджет', specialty: 'Торговое дело (38.02.08)', qualification: '-', base: '11', form: 'Очная', places: '25' },
-				{
-					funding: 'Бюджет',
-					specialty: 'Мастер по изготовлению швейных изделий (29.01.33)',
-					qualification: '-',
-					base: '-',
-					form: '-',
-					places: '25',
-				},
-				{
-					funding: 'Не бюджет',
-					specialty: 'Информационные системы и программирование (09.02.07)',
-					qualification: 'разработчик Web и мультимедийных приложений',
-					base: '9',
-					form: 'Очная',
-					places: '25',
-				},
-				{
-					funding: 'Не бюджет',
-					specialty: 'Информационные системы и программирование (09.02.07)',
-					qualification: 'Программист',
-					base: '9',
-					form: 'Очная',
-					places: '25',
-				},
-				{
-					funding: 'Не бюджет',
-					specialty: 'Бухгалтерский учет (по отраслям) (38.02.01)',
-					qualification: '-',
-					base: '9',
-					form: 'Очная',
-					places: '25',
-				},
-				{
-					funding: 'Не бюджет',
-					specialty: 'Экологическая безопасность природных комплексов (20.02.01)',
-					qualification: '-',
-					base: '9',
-					form: 'Очная',
-					places: '25',
-				},
-				{
-					funding: 'Не бюджет',
-					specialty: 'Конструирование, моделирование и технология изделий легкой промышленности (29.02.10)',
-					qualification: '- (швейные изделия)',
-					base: '9',
-					form: 'Очная',
-					places: '25',
-				},
-			],
-		};
-	},
-	methods: {
-		apply() {
-			this.$emit('apply');
-		},
-	},
+interface AdmissionRow {
+	funding: string;
+	specialty: string;
+	qualification: string;
+	base: string;
+	form: string;
+	places: string;
+}
+
+const tableData = ref<AdmissionRow[]>([]);
+
+onMounted(async () => {
+	const res = await $fetch<AdmissionRow[]>('/api/admission-plan');
+	tableData.value = res;
 });
+
+const apply = () => {
+	alert('Заявка отправлена!');
+};
 </script>
 
 <template>

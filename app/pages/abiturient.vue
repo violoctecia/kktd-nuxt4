@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import AdmissionPlan from '~/components/sections/AdmissionPlan.vue';
-import DocumentSubmission from '~/components/sections/DocumentSubmission.vue';
+import AdmissionPlan from '@/components/sections/AdmissionPlan.vue';
+import DocumentSubmission from '@/components/sections/DocumentSubmission.vue';
 </script>
 
 <template>
