@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-
 interface AdmissionRow {
 	funding: string;
 	specialty: string;
@@ -10,12 +8,7 @@ interface AdmissionRow {
 	places: string;
 }
 
-const tableData = ref<AdmissionRow[]>([]);
-
-onMounted(async () => {
-	const res = await $fetch<AdmissionRow[]>('/api/admission-plan');
-	tableData.value = res;
-});
+const { data: tableData, pending, error } = await useFetch<AdmissionRow[]>('/api/admission-plan');
 
 const apply = () => {
 	alert('Заявка отправлена!');
@@ -25,7 +18,14 @@ const apply = () => {
 <template>
 	<div class="mb-6 rounded-lg bg-white p-6 shadow-lg">
 		<h3 class="mb-4 text-xl text-blue-700">План приема</h3>
-		<div class="overflow-x-auto rounded-lg shadow-lg">
+
+		<div v-if="pending" class="p-4 text-center text-gray-500">Загружаем данные...</div>
+
+		<div v-else-if="error" class="p-4 text-center text-red-500">Ошибка загрузки данных.</div>
+
+		<div v-else-if="!tableData || tableData.length === 0" class="p-4 text-center text-gray-500">Данные отсутствуют.</div>
+
+		<div v-else class="overflow-x-auto rounded-lg shadow-lg">
 			<table class="w-full min-w-[800px] border-collapse">
 				<thead>
 					<tr class="bg-blue-900 text-white">
@@ -54,10 +54,12 @@ const apply = () => {
 				</tbody>
 			</table>
 		</div>
+
 		<div class="mt-4 rounded-lg bg-blue-50 p-4">
 			<p class="font-semibold">Итого бюджет: 290 мест</p>
 			<p class="font-semibold">Итого не бюджет: 125 мест</p>
 		</div>
+
 		<button @click="apply" class="mt-6 rounded bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700">
 			Подать заявку
 		</button>
