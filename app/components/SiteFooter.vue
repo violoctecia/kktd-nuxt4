@@ -72,7 +72,7 @@ const year: number = new Date().getFullYear();
 				<h3 class="mb-4 text-lg font-semibold text-primaryLight">Абитуриенту</h3>
 				<ul class="space-y-2 text-sm">
 					<li>
-						<NuxtLink to="/app/pages/abiturient">Как поступить</NuxtLink>
+						<NuxtLink to="/abiturient">Как поступить</NuxtLink>
 					</li>
 					<li>
 						<NuxtLink to="/specialties">Специальности</NuxtLink>
