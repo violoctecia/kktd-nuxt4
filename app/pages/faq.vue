@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import ContactInfo from '@/components/sections/ContactInfo.vue';
 import FaqItem from '@/components/sections/FaqItem.vue';
-import { ref, watch } from 'vue';
 import SiteBreadcrumbs from '~/components/SiteBreadcrumbs.vue';
 
 interface Faq {
@@ -15,12 +14,7 @@ const breadcrumbs = [
 	{ label: 'FAQ', href: '/faq' },
 ];
 
-const faqItems = ref<Faq[]>([]);
-const { data: fetchedFaq, error } = useFetch<Faq[]>('/api/faq');
-
-watch(fetchedFaq, (val) => {
-	if (val) faqItems.value = val;
-});
+const { data: faqItems, error } = useFetch<Faq[]>('/api/faq');
 </script>
 
 <template>
