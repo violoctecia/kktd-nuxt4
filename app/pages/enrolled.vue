@@ -3,7 +3,7 @@
     <SiteBreadcrumbs :items="breadcrumbs" />
 
     <div class="container">
-      <h1 class="h1 mb-8">Зачисленные студенты 2024</h1>
+      <h1 class="h1 mb-8">Зачисленные студенты 2025</h1>
 
       <!-- Фильтры -->
       <div class="bg-white p-6 rounded-xl shadow mb-8">
