@@ -1,5 +1,5 @@
 <template>
-	<div class="container my-8 md:my-12">
+	<div class="my-8 md:my-12">
 		<ul itemscope itemtype="https://schema.org/BreadcrumbList" class="flex items-center gap-2">
 			<li
 				v-for="(i, idx) in items"

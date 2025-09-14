@@ -1,13 +1,13 @@
 <template>
-	<main>
+	<div class="container">
 		<SiteBreadcrumbs :items="breadcrumbs" />
-		<section class="container">
+		<section>
 			<h1 class="h1">Новости колледжа</h1>
 			<!--TODO: сортировака по категориям	-->
 			<NewsList v-if="newsItems" :items="newsItems" tag="h2" />
 			<p v-else>Новостей пока нет</p>
 		</section>
-	</main>
+	</div>
 </template>
 
 <script setup lang="ts">

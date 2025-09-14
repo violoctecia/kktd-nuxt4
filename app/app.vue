@@ -1,15 +1,19 @@
 <template>
 	<NuxtLoadingIndicator color="#00ffdd" :height="3" />
 
-	<NuxtLayout>
+	<SiteHeader />
+	<main>
 		<NuxtPage />
-	</NuxtLayout>
+	</main>
+	<SiteFooter />
 	<ModalBase />
 	<!--    <CustomLoader v-if="initialLoading" />-->
 	<!--    <ApplyModal v-if="isModalOpen" @close="isModalOpen = false" />-->
 </template>
 
 <script setup lang="ts">
+import SiteFooter from '~/components/SiteFooter.vue';
+import SiteHeader from '~/components/SiteHeader.vue';
 // import { onErrorCaptured, onMounted, ref } from 'vue';
 // import CustomLoader from '~/components/CustomLoader.vue';
 // import ApplyModal from '~/components/ui/ApplyModal.vue';

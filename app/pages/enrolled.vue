@@ -6,16 +6,8 @@ const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'Зачи�
 </script>
 
 <template>
-	<main>
+	<div class="container">
 		<SiteBreadcrumbs :items="breadcrumbs" />
-		<div class="container mx-auto py-6">
-			<Enrolled />
-		</div>
-	</main>
+		<Enrolled />
+	</div>
 </template>
-
-<style scoped>
-.container {
-	max-width: 1000px;
-}
-</style>

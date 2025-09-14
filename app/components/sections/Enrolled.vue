@@ -1,5 +1,5 @@
 <template>
-	<div class="container mx-auto py-8">
+	<div class="py-8">
 		<h1 class="mb-8 text-center text-3xl font-bold">Зачисленные студенты 2025</h1>
 
 		<div class="mb-6 rounded-xl bg-white p-6 shadow-md">
@@ -61,12 +61,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="group in filteredGroups" :key="group.id">
-						<td :rowspan="group.students.length" class="border p-3 align-top font-semibold">{{ group.name }}</td>
-						<td :rowspan="group.students.length" class="border p-3 align-top">{{ group.specialtyTitle }}</td>
+					<template v-for="group in filteredGroups" :key="group.id">
+						<tr v-for="(student, idx) in group.students" :key="student.fullName">
+							<!-- Группа и специальность только для первой строки -->
+							<td v-if="idx === 0" :rowspan="group.students.length" class="border p-3 align-top font-semibold">
+								{{ group.name }}
+							</td>
+							<td v-if="idx === 0" :rowspan="group.students.length" class="border p-3 align-top">
+								{{ group.specialtyTitle }}
+							</td>
 
-						<template v-for="(student, idx) in group.students" :key="student.fullName">
-							<tr v-if="idx !== 0"></tr>
+							<!-- Студент -->
 							<td class="border p-3">{{ student.fullName }}</td>
 							<td class="border p-3">
 								<span
@@ -79,13 +84,15 @@
 									{{ student.status === 'budget' ? 'Бюджет' : 'Внебюджет' }}
 								</span>
 							</td>
-							<td class="border p-3 text-center" v-if="idx === 0" :rowspan="group.students.length">
+
+							<!-- Кнопка PDF только для первой строки -->
+							<td v-if="idx === 0" :rowspan="group.students.length" class="border p-3 text-center">
 								<button @click="downloadPdf(group)" class="rounded bg-green-600 px-3 py-1 text-white hover:bg-green-700">
 									Скачать PDF
 								</button>
 							</td>
-						</template>
-					</tr>
+						</tr>
+					</template>
 				</tbody>
 			</table>
 		</div>
@@ -95,8 +102,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue';
-
 interface Student {
 	fullName: string;
 	status: 'budget' | 'contract';
@@ -111,7 +116,6 @@ interface Group {
 	students: Student[];
 }
 
-const dataRaw = ref<Group[]>([]);
 const filters = reactive({ specialty: 'all', group: 'all', status: 'all', search: '' });
 const isAsc = ref(true);
 const errorMessage = ref<string | null>(null);
@@ -120,28 +124,20 @@ function normalize(s: string) {
 	return (s || '').toLowerCase().replace(/\s+/g, ' ').trim();
 }
 
-onMounted(async () => {
-	try {
-		const res = await fetch('/api/enrolled');
-		const json = (await res.json()) as Group[];
-		json.forEach((g) => (g.students = g.students.map((s) => ({ ...s, specialtyTitle: g.specialtyTitle }))));
-		dataRaw.value = json;
-	} catch {
-		errorMessage.value = 'Не удалось загрузить данные. Попробуйте позже.';
-	}
-});
+const { data } = await useFetch<Group[]>('/api/enrolled');
+const dataRaw = data.value!;
 
 const specialties = computed(() => {
 	const map = new Map<string, string>();
-	dataRaw.value.forEach((g) => map.set(g.specialty, g.specialtyTitle));
+	dataRaw.forEach((g) => map.set(g.specialty, g.specialtyTitle));
 	return Array.from(map.entries()).map(([code, title]) => ({ code, title }));
 });
 
-const groupsList = computed(() => dataRaw.value.map((g) => g.name));
+const groupsList = computed(() => dataRaw.map((g) => g.name));
 
 const filteredGroups = computed(() => {
 	const q = normalize(filters.search);
-	return dataRaw.value
+	return dataRaw
 		.filter((g) => filters.specialty === 'all' || g.specialty === filters.specialty)
 		.filter((g) => filters.group === 'all' || g.name === filters.group)
 		.map((g) => {
@@ -169,36 +165,19 @@ function toggleSort() {
 const sortLabel = computed(() => (isAsc.value ? 'Сортировка: A→Z' : 'Сортировка: Z→A'));
 
 function downloadPdf(group: Group) {
-	const html = `
-    <html>
-      <head>
-        <meta charset="utf-8"/>
-        <title>${group.name}</title>
-        <style>
-          body { font-family: Arial, sans-serif; padding: 20px; color: #111827; }
-          h1 { font-size: 22px; margin-bottom: 10px; }
-          .spec { color: #6b7280; margin-bottom: 12px; }
-          .student { margin-bottom: 6px; }
-        </style>
-      </head>
-      <body>
-        <h1>${group.name}</h1>
-        <div class="spec">${group.specialtyTitle}</div>
-        ${group.students.map((s) => `<div class="student">${s.fullName} — ${s.status === 'budget' ? 'Бюджет' : 'Внебюджет'}</div>`).join('')}
-      </body>
-    </html>
-  `;
-	const printWindow = window.open('', '_blank');
-	if (!printWindow) return;
-	printWindow.document.write(html);
-	printWindow.document.close();
-	printWindow.focus();
-	setTimeout(() => printWindow.print(), 200);
+	fetch('/api/enrolled-pdf', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(group),
+	})
+		.then((res) => res.blob())
+		.then((blob) => {
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = `${group.name}.pdf`;
+			a.click();
+			URL.revokeObjectURL(url);
+		});
 }
 </script>
-
-<style scoped>
-.container {
-	max-width: 1200px;
-}
-</style>

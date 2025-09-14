@@ -4,14 +4,8 @@ import DocumentSubmission from '@/components/sections/DocumentSubmission.vue';
 </script>
 
 <template>
-	<div class="container mx-auto py-6">
+	<div class="container__sm my-6">
 		<DocumentSubmission />
 		<AdmissionPlan />
 	</div>
 </template>
-
-<style scoped>
-.container {
-	max-width: 1000px;
-}
-</style>

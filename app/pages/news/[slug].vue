@@ -1,6 +1,8 @@
 <template>
-	<main v-if="currentArticle">
-		<SiteBreadcrumbs :items="breadcrumbs" />
+	<div>
+		<div class="container" v-if="currentArticle">
+			<SiteBreadcrumbs :items="breadcrumbs" />
+		</div>
 		<article class="container__sm overflow-hidden" itemscope itemtype="https://schema.org/Article">
 			<div class="flex flex-wrap items-center gap-x-4 gap-y-2">
 				<time class="text-sm text-primary" :datetime="currentArticle.isoDate" itemprop="datePublished">
@@ -42,8 +44,10 @@
 				<meta itemprop="publisher" content="Казанский Колледж Технологии и Дизайна" />
 			</div>
 		</article>
-		<NewsBlock class="mt-8 md:mt-16" :limit="3" h2="Другие новости" />
-	</main>
+		<div class="container">
+			<NewsBlock class="mt-8 md:mt-16" :limit="3" h2="Другие новости" />
+		</div>
+	</div>
 </template>
 
 <script setup lang="ts">

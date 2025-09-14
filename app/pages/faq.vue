@@ -18,7 +18,7 @@ const { data: faqItems, error } = useFetch<Faq[]>('/api/faq');
 </script>
 
 <template>
-	<main class="container mx-auto px-4 py-12">
+	<div class="container mx-auto px-4 py-12">
 		<SiteBreadcrumbs :items="breadcrumbs" />
 
 		<h1 class="mb-8 text-3xl font-bold">Часто задаваемые вопросы</h1>
@@ -36,5 +36,5 @@ const { data: faqItems, error } = useFetch<Faq[]>('/api/faq');
 		<ContactInfo class="mt-12" />
 
 		<div v-if="error" class="mt-6 text-red-500">Ошибка загрузки FAQ: {{ error.message }}</div>
-	</main>
+	</div>
 </template>

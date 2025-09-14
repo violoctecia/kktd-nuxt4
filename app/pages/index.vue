@@ -1,12 +1,12 @@
 <template>
-	<main>
+	<div>
 		<HeroBlock />
 		<NewsBlock :limit="3" h2="Новости и события" />
 		<AboutBlock />
 		<OurAdvantages />
 		<OurPrograms />
 		<!-- TODO: блок с контактами + карта -->
-	</main>
+	</div>
 </template>
 
 <script setup lang="ts">
