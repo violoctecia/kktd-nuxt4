@@ -1,133 +1,175 @@
 <template>
-  <div class="container mx-auto py-6">
-    <h2 class="text-3xl font-bold text-gray-900 mb-6">Рейтинг абитуриентов 2025</h2>
-    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
-      <div class="flex flex-col md:flex-row gap-4 mb-4">
-        <input v-model="filters.search" type="text" placeholder="Поиск по ФИО..." class="w-full md:w-1/3 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <select v-model="filters.program" class="w-full md:w-1/3 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option value="">Все специальности</option>
-          <option value="2910-kozha">29.02.10 - Кожа</option>
-          <option value="2910-meh">29.02.10 - Мех</option>
-          <option value="2910-shveya-11">29.02.10 - Швейные изделия (11 кл., бюджет)</option>
-          <option value="2910-shveya-9">29.02.10 - Швейные изделия (9 кл., бюджет)</option>
-          <option value="2910-shveya-9-vneb">29.02.10 - Швейные изделия (9 кл., внебюджет)</option>
-          <option value="100204">10.02.04 - Информационная безопасность</option>
-          <option value="380208-11">38.02.08 - Торговое дело (11 кл., внебюджет)</option>
-          <option value="380208-9">38.02.08 - Торговое дело (9 кл.)</option>
-          <option value="090207-programmist">09.02.07 - Программист (внебюджет)</option>
-          <option value="090207-razrabotchik">09.02.07 - Разработчик веб-приложений (внебюджет)</option>
-          <option value="090207-specialist">09.02.07 - Специалист по ИС (бюджет)</option>
-          <option value="290202">29.02.02 - Технология кожи и меха</option>
-          <option value="290205">29.02.05 - Технология текстильных изделий</option>
-          <option value="290133">29.01.33 - Мастер по изготовлению швейных изделий</option>
-        </select>
-        <button @click="toggleSort" class="w-full md:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-          {{ sortButtonText }}
-        </button>
-      </div>
-    </div>
-    <div v-for="spec in filteredSpecs" :key="spec.id" class="bg-white rounded-lg shadow-md p-6 mb-6" :class="{ 'hidden': filters.program && spec.id !== filters.program }">
-      <h3 class="text-xl font-semibold text-gray-800 mb-4 border-b-2 border-blue-200 pb-2">{{ spec.title }}</h3>
-      <div class="overflow-x-auto">
-        <table class="w-full min-w-[800px] text-left">
-          <thead>
-            <tr class="bg-blue-600 text-white">
-              <th class="p-3">№ п/п</th>
-              <th class="p-3">Фамилия</th>
-              <th class="p-3">Имя</th>
-              <th class="p-3">Отчество</th>
-              <th class="p-3">Средний балл</th>
-              <th class="p-3">Статус</th>
-              <th class="p-3">Примечания</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-if="spec.data.length === 0">
-              <td colspan="7" class="p-4 text-center text-gray-500 italic">Данные загружаются...</td>
-            </tr>
-            <tr v-for="(row, index) in spec.data" :key="index" class="hover:bg-blue-50 transition-colors">
-              <td class="p-3">{{ index + 1 }}</td>
-              <td class="p-3">{{ row['Фамилия'] }}</td>
-              <td class="p-3">{{ row['Имя'] }}</td>
-              <td class="p-3">{{ row['Отчество'] }}</td>
-              <td class="p-3">{{ row['Средний балл'] }}</td>
-              <td class="p-3">
-                <span :class="{'bg-green-500': row['Статус'] === 'enrolled', 'bg-yellow-500': row['Статус'] === 'waiting', 'bg-red-500': row['Статус'] === 'rejected'}" class="inline-block px-3 py-1 text-xs font-semibold text-white rounded-full">
-                  {{ row['Статус'] === 'enrolled' ? 'Зачислен' : row['Статус'] === 'waiting' ? 'В ожидании' : 'Отклонен' }}
-                </span>
-              </td>
-              <td class="p-3">{{ row['Примечания'] }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+	<div class="container mx-auto py-6">
+		<h2 class="mb-6 text-3xl font-bold text-gray-900">Рейтинг абитуриентов 2025</h2>
+		<div class="mb-6 rounded-lg bg-white p-6 shadow-md">
+			<div class="mb-4 flex flex-col gap-4 md:flex-row">
+				<input
+					v-model="filters.search"
+					type="text"
+					placeholder="Поиск по ФИО..."
+					class="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-1/3"
+				/>
+				<select
+					v-model="filters.program"
+					class="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-1/3"
+				>
+					<option value="">Все специальности</option>
+					<option v-for="spec in specsRaw" :key="spec.id" :value="spec.id">{{ spec.title }}</option>
+				</select>
+				<button
+					@click="toggleSort"
+					class="w-full rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-auto"
+				>
+					{{ sortButtonText }}
+				</button>
+			</div>
+		</div>
+
+		<div v-for="spec in filteredSpecs" :key="spec.id" class="mb-6 rounded-lg bg-white p-6 shadow-md">
+			<h3 class="mb-4 border-b-2 border-blue-200 pb-2 text-xl font-semibold text-gray-800">{{ spec.title }}</h3>
+			<div class="overflow-x-auto">
+				<table class="w-full min-w-[800px] text-left">
+					<thead>
+						<tr class="bg-blue-600 text-white">
+							<th class="p-3">№ п/п</th>
+							<th class="p-3">Фамилия</th>
+							<th class="p-3">Имя</th>
+							<th class="p-3">Отчество</th>
+							<th class="p-3">Средний балл</th>
+							<th class="p-3">Статус</th>
+							<th class="p-3">Примечания</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-if="spec.data.length === 0">
+							<td colspan="7" class="p-4 text-center italic text-gray-500">Данных нет</td>
+						</tr>
+						<tr v-for="(row, index) in spec.data" :key="index" class="transition-colors hover:bg-blue-50">
+							<td class="p-3">{{ index + 1 }}</td>
+							<td class="p-3">{{ row['Фамилия'] }}</td>
+							<td class="p-3">{{ row['Имя'] }}</td>
+							<td class="p-3">{{ row['Отчество'] }}</td>
+							<td class="p-3">{{ row['Средний балл'] }}</td>
+							<td class="p-3">
+								<span
+									:class="{
+										'bg-green-500': row['Статус'] === 'enrolled',
+										'bg-yellow-500': row['Статус'] === 'waiting',
+										'bg-red-500': row['Статус'] === 'rejected',
+									}"
+									class="inline-block rounded-full px-3 py-1 text-xs font-semibold text-white"
+								>
+									{{
+										row['Статус'] === 'enrolled' ? 'Зачислен' : row['Статус'] === 'waiting' ? 'В ожидании' : 'Отклонен'
+									}}
+								</span>
+							</td>
+							<td class="p-3">{{ row['Примечания'] }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
-const filters = ref({ search: '', program: '' });
-const isSorted = ref(false);
-const sortButtonText = computed(() => isSorted.value ? 'Отменить сортировку' : 'Сортировать по баллам');
-
-const specs = ref([
-  { id: '2910-kozha', title: 'Конструирование, моделирование и технология изделий легкой промышленности (29.02.10) - Кожа (28 мест)', data: [] },
-  { id: '2910-meh', title: 'Конструирование, моделирование и технология изделий легкой промышленности (29.02.10) - Мех (26 мест)', data: [] },
-  { id: '2910-shveya-11', title: 'Конструирование, моделирование и технология изделий легкой промышленности (29.02.10) - Швейные изделия (11 класс, бюджет, 118 мест)', data: [] },
-  { id: '2910-shveya-9', title: 'Конструирование, моделирование и технология изделий легкой промышленности (29.02.10) - Швейные изделия (9 класс, бюджет, 194 места)', data: [] },
-  { id: '2910-shveya-9-vneb', title: 'Конструирование, моделирование и технология изделий легкой промышленности (29.02.10) - Швейные изделия (9 класс, внебюджет, 11 мест)', data: [] },
-  { id: '100204', title: 'Обеспечение информационной безопасности телекоммуникационных систем (10.02.04) - 126 мест', data: [] },
-  { id: '380208-11', title: 'Торговое дело (38.02.08) - 11 класс, внебюджет, 32 места', data: [] },
-  { id: '380208-9', title: 'Торговое дело (38.02.08) - 9 класс, 342 места', data: [] },
-  { id: '090207-programmist', title: 'Информационные системы и программирование (09.02.07) - Программист, внебюджет, 149 мест', data: [] },
-  { id: '090207-razrabotchik', title: 'Информационные системы и программирование (09.02.07) - Разработчик веб и мультимедийных приложений, внебюджет, 99 мест', data: [] },
-  { id: '090207-specialist', title: 'Информационные системы и программирование (09.02.07) - Специалист по информационным системам, бюджет, 297 мест', data: [] },
-  { id: '290202', title: 'Технология кожи и меха (29.02.02) - 48 мест', data: [] },
-  { id: '290205', title: 'Технология текстильных изделий (29.02.05) - 74 места', data: [] },
-  { id: '290133', title: 'Мастер по изготовлению швейных изделий (29.01.33) - 61 место', data: [] },
-]);
-
-async function loadData() {
-  try {
-    const response = await fetch('/data');
-    const data = await response.json();
-    specs.value.forEach(spec => {
-      spec.data = data[spec.title] || [];
-      if (filters.value.search) {
-        spec.data = spec.data.filter(row => 
-          `${row['Фамилия']} ${row['Имя']} ${row['Отчество']}`.toLowerCase().includes(filters.value.search.toLowerCase())
-        );
-      }
-      if (isSorted.value) {
-        spec.data.sort((a, b) => parseFloat(b['Средний балл']) - parseFloat(a['Средний балл']));
-      }
-    });
-  } catch (error) {
-    console.error('Ошибка загрузки данных:', error);
-  }
+interface RatingRow {
+	Фамилия: string;
+	Имя: string;
+	Отчество: string;
+	'Средний балл': string;
+	Статус: 'enrolled' | 'waiting' | 'rejected';
+	Примечания: string;
 }
 
+interface Specialty {
+	id: string;
+	title: string;
+	data: RatingRow[];
+}
+
+interface Filters {
+	search: string;
+	program: string;
+}
+
+const filters = ref<Filters>({ search: '', program: '' });
+const isSorted = ref(false);
+const sortButtonText = computed(() => (isSorted.value ? 'Отменить сортировку' : 'Сортировать по баллам'));
+const specsRaw = ref<Specialty[]>([]);
+
+function normalize(s: string) {
+	return (s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+onMounted(async () => {
+	try {
+		const res = await fetch('/api/rating');
+		const data = (await res.json()) as Specialty[];
+		specsRaw.value = data || [];
+	} catch (e) {
+		console.error(e);
+	}
+});
+
 const filteredSpecs = computed(() => {
-  return specs.value.map(spec => ({
-    ...spec,
-    data: spec.data.filter(row => !filters.value.search || 
-      `${row['Фамилия']} ${row['Имя']} ${row['Отчество']}`.toLowerCase().includes(filters.value.search.toLowerCase())
-    )
-  }));
+	const q = normalize(filters.value.search);
+	return specsRaw.value
+		.map((spec) => {
+			const originalRows = spec.data || [];
+			let rows: RatingRow[] = [];
+			if (q) {
+				const matched = originalRows
+					.map((row, idx) => {
+						const fullname = normalize(`${row['Фамилия']} ${row['Имя']} ${row['Отчество']}`);
+						const lastFirst = `${normalize(row['Фамилия'])} ${normalize(row['Имя'])}`;
+						const avg = parseFloat((row['Средний балл'] || '0').replace(',', '.')) || 0;
+						let score = 0;
+						if (fullname === q) score = 1000;
+						else if (fullname.startsWith(q)) score = 900;
+						else if (lastFirst.startsWith(q)) score = 800;
+						else if (normalize(row['Фамилия']).startsWith(q)) score = 700;
+						else if (fullname.includes(q)) score = 100;
+						return { row, idx, score, avg };
+					})
+					.filter((x) => x.score > 0);
+				matched.sort((a, b) => {
+					if (b.score !== a.score) return b.score - a.score;
+					if (isSorted.value) return b.avg - a.avg;
+					return a.idx - b.idx;
+				});
+				rows = matched.map((m) => m.row);
+			} else {
+				rows = originalRows.slice();
+				if (isSorted.value) {
+					rows = rows
+						.slice()
+						.sort(
+							(a, b) =>
+								parseFloat((b['Средний балл'] || '0').replace(',', '.')) -
+								parseFloat((a['Средний балл'] || '0').replace(',', '.')),
+						);
+				}
+			}
+			return { ...spec, data: rows };
+		})
+		.filter((spec) => {
+			if (filters.value.program) return spec.id === filters.value.program;
+			if (!q) return true;
+			return spec.data.length > 0;
+		});
 });
 
-const toggleSort = () => {
-  isSorted.value = !isSorted.value;
-  loadData();
-};
-
-onMounted(() => {
-  loadData();
-});
+function toggleSort() {
+	isSorted.value = !isSorted.value;
+}
 </script>
 
 <style scoped>
-.hidden { display: none; }
+.hidden {
+	display: none;
+}
 </style>
