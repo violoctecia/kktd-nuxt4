@@ -1,5 +1,5 @@
 <template>
-	<div class="content-section">
+	<div>
 		<h2
 			class="relative mb-12 text-center text-3xl font-bold text-blue-900 after:absolute after:bottom-0 after:left-1/2 after:h-1 after:w-16 after:-translate-x-1/2 after:bg-blue-500 after:content-['']"
 		>
@@ -37,9 +37,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-
 const specialties = [
 	{
 		id: '090207',
@@ -187,9 +184,5 @@ onMounted(() => {
 .specialty-card.highlighted {
 	box-shadow: 0 0 25px rgba(14, 117, 197, 0.4);
 	border-left: 6px solid #0e75c5;
-}
-.content-section {
-	max-width: 1000px;
-	margin: 0 auto;
 }
 </style>

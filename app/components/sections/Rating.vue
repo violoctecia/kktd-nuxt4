@@ -1,5 +1,5 @@
 <template>
-	<div class="container mx-auto py-6">
+	<div>
 		<h2 class="mb-6 text-3xl font-bold text-gray-900">Рейтинг абитуриентов 2025</h2>
 		<div class="mb-6 rounded-lg bg-white p-6 shadow-md">
 			<div class="mb-4 flex flex-col gap-4 md:flex-row">
