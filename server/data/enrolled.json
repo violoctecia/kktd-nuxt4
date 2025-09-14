@@ -1,0 +1,72 @@
+[
+	{
+		"id": "ISP-101",
+		"name": "ИСП-101",
+		"specialty": "090207",
+		"specialtyTitle": "09.02.07 - Информационные системы и программирование",
+		"students": [
+			{ "fullName": "Иванов Иван Иванович", "status": "budget" },
+			{ "fullName": "Петрова Анна Сергеевна", "status": "budget" },
+			{ "fullName": "Сидоров Петр Алексеевич", "status": "contract" },
+			{ "fullName": "Каменева Ольга Сергеевна", "status": "contract" }
+		]
+	},
+	{
+		"id": "ISP-102",
+		"name": "ИСП-102",
+		"specialty": "090207",
+		"specialtyTitle": "09.02.07 - Информационные системы и программирование",
+		"students": [
+			{ "fullName": "Алексеев Роман Дмитриевич", "status": "budget" },
+			{ "fullName": "Михайлова Анна Сергеевна", "status": "budget" },
+			{ "fullName": "Федоров Илья Алексеевич", "status": "contract" },
+			{ "fullName": "Козлова Ольга Павловна", "status": "contract" }
+		]
+	},
+	{
+		"id": "KMT-201",
+		"name": "КМТ-201",
+		"specialty": "2910",
+		"specialtyTitle": "29.02.10 - Конструирование, моделирование и технология изделий легкой промышленности",
+		"students": [
+			{ "fullName": "Васильева Екатерина Андреевна", "status": "budget" },
+			{ "fullName": "Григорьев Артем Сергеевич", "status": "contract" },
+			{ "fullName": "Новикова Ксения Павловна", "status": "budget" },
+			{ "fullName": "Орлов Павел Сергеевич", "status": "contract" }
+		]
+	},
+	{
+		"id": "KMT-202",
+		"name": "КМТ-202",
+		"specialty": "2910",
+		"specialtyTitle": "29.02.10 - Конструирование, моделирование и технология изделий легкой промышленности",
+		"students": [
+			{ "fullName": "Панин Денис Сергеевич", "status": "contract" },
+			{ "fullName": "Мартынова Елена Викторовна", "status": "budget" },
+			{ "fullName": "Зайцев Григорий Иванович", "status": "contract" },
+			{ "fullName": "Соколова Дарья Игоревна", "status": "budget" }
+		]
+	},
+	{
+		"id": "IB-301",
+		"name": "ИБ-301",
+		"specialty": "100204",
+		"specialtyTitle": "10.02.04 - Обеспечение информационной безопасности телекоммуникационных систем",
+		"students": [
+			{ "fullName": "Кузнецов Дмитрий Олегович", "status": "budget" },
+			{ "fullName": "Смирнова Елена Викторовна", "status": "budget" },
+			{ "fullName": "Попов Антон Романович", "status": "contract" }
+		]
+	},
+	{
+		"id": "EK-401",
+		"name": "ЭК-401",
+		"specialty": "380201",
+		"specialtyTitle": "38.02.01 - Экономика и бухгалтерский учет (по отраслям)",
+		"students": [
+			{ "fullName": "Новиков Егор Александрович", "status": "contract" },
+			{ "fullName": "Морозова Ксения Владимировна", "status": "budget" },
+			{ "fullName": "Лебедев Степан Андреевич", "status": "budget" }
+		]
+	}
+]
