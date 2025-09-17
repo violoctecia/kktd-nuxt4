@@ -10,7 +10,7 @@
 
 		<h2>Текущий контент:</h2>
 		<div class="flex w-full items-start justify-start">
-			<div class="html-content w-full rounded-lg bg-white p-4 shadow-md" v-if="data?.[0]" v-html="data[0].content"></div>
+			<div class="html-content w-full max-w-4xl rounded-lg bg-white p-4 shadow-md" v-if="data?.[0]" v-html="data[0].content"></div>
 			<div class="w-full items-center justify-center" v-else>
 				<LoadingSpinner class="text-blue-600" v-if="pending" />
 				<p v-if="error">Произошла какая-то ошибка: {{ error }}</p>
@@ -27,7 +27,7 @@ import AboutCRUD from '~/components/admin/modals/AboutCRUD.vue';
 import { useModalStore } from '~/store/modalsStore';
 
 const config = useRuntimeConfig();
-const backendUrl = config.public.backendUrl;
+const { backendUrl } = config.public;
 
 const modal = useModalStore();
 

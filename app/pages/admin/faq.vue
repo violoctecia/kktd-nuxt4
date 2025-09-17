@@ -8,7 +8,7 @@
 		<h2>Текущий контент:</h2>
 		<div class="flex w-full items-start justify-start">
 			<div class="flex w-full flex-col gap-6" v-if="data?.length">
-				<div v-for="item in data" :key="item.id" class="flex w-full flex-col rounded-lg bg-white p-4 shadow-md">
+				<div v-for="item in data" :key="item.id" class="flex w-full max-w-4xl flex-col rounded-lg bg-white p-4 shadow-md">
 					<h2>{{ item.question }}</h2>
 					<div class="html-content rounded-lg bg-gray-100 p-4" v-html="item.content"></div>
 					<div class="list-item-tools">

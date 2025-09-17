@@ -9,4 +9,5 @@ router.get('/:id', getById);
 router.post('/', authMiddleware, create);
 router.put('/:id', authMiddleware, update);
 router.delete('/:id', authMiddleware, remove);
+
 export const enrolledRoutes = router;
