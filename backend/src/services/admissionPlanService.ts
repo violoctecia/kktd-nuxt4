@@ -1,5 +1,5 @@
-import type { AdmissionPlanItem } from '../models/types';
-import pool from '../utils/db';
+import pool from '../db/prisma';
+import type { AdmissionPlanItem } from '../types/types';
 
 export class AdmissionPlanServiceClass {
 	async getAll(): Promise<AdmissionPlanItem[]> {
@@ -9,9 +9,9 @@ export class AdmissionPlanServiceClass {
 
 	async create(data: AdmissionPlanItem): Promise<AdmissionPlanItem> {
 		const result = await pool.query(
-			`INSERT INTO admission_plan 
-      (speciality, form, duration, budget_places, paid_places, extras)
-      VALUES ($1,$2,$3,$4,$5,$6) RETURNING *`,
+			`INSERT INTO admission_plan
+                 (speciality, form, duration, budget_places, paid_places, extras)
+             VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
 			[
 				data.speciality,
 				data.form,
@@ -26,9 +26,14 @@ export class AdmissionPlanServiceClass {
 
 	async update(id: number, data: AdmissionPlanItem): Promise<AdmissionPlanItem> {
 		const result = await pool.query(
-			`UPDATE admission_plan SET 
-        speciality=$1, form=$2, duration=$3, budget_places=$4, paid_places=$5, extras=$6
-       WHERE id=$7 RETURNING *`,
+			`UPDATE admission_plan
+             SET speciality=$1,
+                 form=$2,
+                 duration=$3,
+                 budget_places=$4,
+                 paid_places=$5,
+                 extras=$6
+             WHERE id = $7 RETURNING *`,
 			[
 				data.speciality,
 				data.form,

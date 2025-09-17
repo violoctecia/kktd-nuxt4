@@ -11,6 +11,17 @@ export default defineNuxtConfig({
 		output: '~/assets/svg/sprite',
 	},
 
+	routeRules: {
+		// Admin dashboard renders only on client-side
+		'/admin/**': { ssr: false },
+	},
+
+	runtimeConfig: {
+		public: {
+			backendUrl: process.env.NUXT_PUBLIC_BACKEND_URL,
+		},
+	},
+
 	vite: {
 		css: {
 			preprocessorOptions: {
