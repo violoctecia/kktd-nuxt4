@@ -12,7 +12,7 @@
 		>
 			<template #before-title>
 				<div class="mb-3 flex flex-wrap items-center gap-2">
-					<time class="text-sm text-primary" :datetime="item.isoDate" itemprop="datePublished">
+					<time class="text-sm text-primary" :datetime="item.iso_date" itemprop="datePublished">
 						{{ item.date }}
 					</time>
 					<ul v-if="item.categories" class="flex items-center gap-2">

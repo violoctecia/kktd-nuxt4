@@ -33,7 +33,15 @@ const navItems = [
 	}
 
 	.admin-btn {
-		@apply flex items-center justify-center rounded bg-blue-500 px-4 py-2 text-center text-white transition-colors duration-200 hover:bg-blue-600;
+		@apply flex items-center justify-center whitespace-nowrap rounded bg-blue-500 px-4 py-2 text-center text-white transition-colors duration-200 hover:bg-blue-600;
+
+		&.sm {
+			@apply px-2 py-1;
+		}
+
+		&.red {
+			@apply bg-red-400 hover:bg-red-500;
+		}
 	}
 }
 
