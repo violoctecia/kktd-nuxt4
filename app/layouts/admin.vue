@@ -32,11 +32,15 @@ const navItems = [
 		@apply mb-6 text-xl font-medium;
 	}
 
+	h3 {
+		@apply mb-6 text-lg font-medium;
+	}
+
 	.admin-btn {
 		@apply flex items-center justify-center whitespace-nowrap rounded bg-blue-500 px-4 py-2 text-center text-white transition-colors duration-200 hover:bg-blue-600;
 
 		&.sm {
-			@apply px-2 py-1;
+			@apply px-3 py-2 text-sm;
 		}
 
 		&.red {

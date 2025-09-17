@@ -86,7 +86,7 @@ async function send(event: Event) {
 		return;
 	}
 
-	if (formData.content.length > 20) {
+	if (formData.content.length < 20) {
 		msg.value = { type: 'error', text: 'Пустое поле контента или контент слишком короткий' };
 		return;
 	}
