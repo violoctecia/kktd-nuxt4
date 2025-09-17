@@ -30,3 +30,33 @@ body {
 .gs {
 	font-size: 18px;
 }
+
+.html-content {
+	h2 {
+		@apply mb-2 mt-4 text-2xl font-semibold;
+	}
+
+	h3 {
+		@apply mb-2 mt-3 text-xl font-medium;
+	}
+
+	p {
+		@apply mb-2;
+	}
+
+	ul {
+		@apply mb-2 ml-6 list-disc;
+	}
+
+	ol {
+		@apply mb-2 ml-6 list-decimal;
+	}
+
+	li {
+		@apply mb-1;
+	}
+
+	a {
+		@apply text-blue-400;
+	}
+}

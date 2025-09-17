@@ -56,7 +56,6 @@ const editor = useEditor({
 	},
 });
 
-// Синхронизация при внешнем изменении v-model
 watch(
 	() => props.modelValue,
 	(val) => {
