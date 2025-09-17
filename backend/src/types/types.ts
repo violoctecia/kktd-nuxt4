@@ -1,19 +1,17 @@
 export interface AboutItem {
 	id?: number;
-	title: string;
-	text: string;
-	img?: string | null;
+	content: string;
 }
 
 export interface NewsItem {
 	id?: number;
-	img?: string | null;
-	alt?: string | null;
+	img: string;
+	alt: string;
 	date: string;
 	title: string;
 	text: string;
 	slug: string;
-	isoDate: string;
+	iso_date: string;
 	categories: string[];
 	content: string;
 }
@@ -21,8 +19,7 @@ export interface NewsItem {
 export interface FaqItem {
 	id?: number;
 	question: string;
-	answer: string;
-	order_number?: number | null;
+	content: string;
 }
 
 export interface EnrolledItem {

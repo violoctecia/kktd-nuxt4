@@ -7,19 +7,11 @@ class AboutServiceClass {
 	}
 
 	async create(data: Omit<AboutItem, 'id'>): Promise<AboutItem> {
-		const preparedData = {
-			...data,
-			img: data.img ?? null,
-		};
-		return prisma.about.create({ data: preparedData });
+		return prisma.about.create({ data: { content: data.content } });
 	}
 
 	async update(id: number, data: Partial<Omit<AboutItem, 'id'>>): Promise<AboutItem> {
-		const preparedData = {
-			...data,
-			img: data.img ?? undefined,
-		};
-		return prisma.about.update({ where: { id }, data: preparedData });
+		return prisma.about.update({ where: { id }, data: data });
 	}
 
 	async delete(id: number): Promise<void> {

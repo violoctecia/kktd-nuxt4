@@ -7,19 +7,11 @@ class FaqServiceClass {
 	}
 
 	async create(data: Omit<FaqItem, 'id'>): Promise<FaqItem> {
-		const preparedData = {
-			...data,
-			order_number: data.order_number ?? null,
-		};
-		return prisma.faq.create({ data: preparedData });
+		return prisma.faq.create({ data: data });
 	}
 
 	async update(id: number, data: Partial<Omit<FaqItem, 'id'>>): Promise<FaqItem> {
-		const preparedData = {
-			...data,
-			order_number: data.order_number ?? undefined,
-		};
-		return prisma.faq.update({ where: { id }, data: preparedData });
+		return prisma.faq.update({ where: { id }, data: data });
 	}
 
 	async delete(id: number): Promise<void> {
