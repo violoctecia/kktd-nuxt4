@@ -1,29 +1,30 @@
-import type { Faq } from '@prisma/client';
 import prisma from '../../db/prisma';
+import type { FaqItem } from '../../types/types';
 
-class service {
-	async getAll(): Promise<Faq[]> {
-		return prisma.faq.findMany({});
+class FaqServiceClass {
+	async getAll(): Promise<FaqItem[]> {
+		return prisma.faq.findMany();
 	}
 
-	async create(data: Omit<Faq, 'id'>): Promise<Faq> {
-		return prisma.faq.create({
-			data,
-		});
+	async create(data: Omit<FaqItem, 'id'>): Promise<FaqItem> {
+		const preparedData = {
+			...data,
+			order_number: data.order_number ?? null,
+		};
+		return prisma.faq.create({ data: preparedData });
 	}
 
-	async update(id: number, data: Partial<Omit<Faq, 'id'>>): Promise<Faq> {
-		return prisma.faq.update({
-			where: { id },
-			data,
-		});
+	async update(id: number, data: Partial<Omit<FaqItem, 'id'>>): Promise<FaqItem> {
+		const preparedData = {
+			...data,
+			order_number: data.order_number ?? undefined,
+		};
+		return prisma.faq.update({ where: { id }, data: preparedData });
 	}
 
 	async delete(id: number): Promise<void> {
-		await prisma.faq.delete({
-			where: { id },
-		});
+		await prisma.faq.delete({ where: { id } });
 	}
 }
 
-export const FaqService = new service();
+export const FaqService = new FaqServiceClass();

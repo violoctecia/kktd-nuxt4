@@ -6,8 +6,11 @@ import { cfg } from './config';
 import errorHandler from './middleware/errorHandler';
 
 import { aboutRoutes } from './modules/about';
+import { planRoutes } from './modules/admissionPlan';
+import { enrolledRoutes } from './modules/enrolled';
 import { faqRoutes } from './modules/faq';
 import { newsRoutes } from './modules/news';
+import { ratingRoutes } from './modules/rating';
 
 const app = express();
 
@@ -31,10 +34,9 @@ app.use('/' + uploadDir, express.static(uploadsPath));
 app.use(`${prefix}/about`, aboutRoutes);
 app.use(`${prefix}/faq`, faqRoutes);
 app.use(`${prefix}/news`, newsRoutes);
-
-// app.use(`${prefix}/enrolled`, enrolledRoutes);
-// app.use(`${prefix}/admission-plan`, planRoutes);
-// app.use(`${prefix}/rating`, ratingRoutes);
+app.use(`${prefix}/enrolled`, enrolledRoutes);
+app.use(`${prefix}/admission-plan`, planRoutes);
+app.use(`${prefix}/rating`, ratingRoutes);
 
 app.use(errorHandler);
 
