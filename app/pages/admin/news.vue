@@ -4,7 +4,6 @@
 		<div class="mb-12 flex w-full flex-row items-center gap-4 overflow-auto">
 			<button class="admin-btn" @click="showCreateModal">Создать новость</button>
 			<button class="admin-btn" @click="refresh()">Перезагрузить список</button>
-			<button class="admin-btn red" @click="showDeleteModal()">Удалить новость</button>
 		</div>
 		<h2>Текущие новости:</h2>
 		<div class="flex w-full items-start justify-start">

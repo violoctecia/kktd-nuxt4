@@ -13,4 +13,10 @@ export interface NewsItem {
 	content: string;
 }
 
+export interface Faq {
+	id?: number;
+	question: string;
+	content: string;
+}
+
 export type ModalType = 'admission' | 'custom';

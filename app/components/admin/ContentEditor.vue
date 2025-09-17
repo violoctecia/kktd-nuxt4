@@ -1,11 +1,14 @@
 <template>
 	<div class="news-editor">
 		<div class="toolbar">
-			<button type="button" @click="setHeading(2)" :class="{ active: editor?.isActive('heading', { level: 2 }) }">
-				Заголовок H2
-			</button>
-			<button type="button" @click="setHeading(3)" :class="{ active: editor?.isActive('heading', { level: 3 }) }">
-				Заголовок H3
+			<button
+				v-for="level in props.allowedHeadings"
+				:key="level"
+				type="button"
+				@click="setHeading(level)"
+				:class="{ active: editor?.isActive('heading', { level }) }"
+			>
+				Заголовок H{{ level }}
 			</button>
 			<button type="button" @click="toggleBold" :class="{ active: editor?.isActive('bold') }">Жирный текст</button>
 			<button type="button" @click="toggleItalic" :class="{ active: editor?.isActive('italic') }">Курсивный текст</button>
@@ -29,6 +32,10 @@ const props = defineProps({
 		type: String,
 		default: '',
 	},
+	allowedHeadings: {
+		type: Array as () => (2 | 3)[],
+		default: () => [2, 3],
+	},
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -36,7 +43,7 @@ const emit = defineEmits(['update:modelValue']);
 const editor = useEditor({
 	extensions: [
 		StarterKit.configure({
-			heading: { levels: [2, 3] },
+			heading: { levels: props.allowedHeadings },
 			link: false,
 			hardBreak: false,
 		}),
