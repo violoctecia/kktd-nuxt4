@@ -63,7 +63,7 @@ import ContentEditor from '~/components/admin/ContentEditor.vue';
 import LoadingSpinner from '~/components/LoadingSpinner.vue';
 
 const config = useRuntimeConfig();
-const backendUrl = config.public.backendUrl;
+const { backendUrl, bearerToken } = config.public;
 
 const formData = reactive({
 	content: '',
@@ -110,6 +110,9 @@ async function send(event: Event) {
 		await $fetch(`${backendUrl}/news`, {
 			method: 'POST',
 			body: fd,
+			headers: {
+				Authorization: `Bearer ${bearerToken}`,
+			},
 		});
 
 		msg.value = { type: 'success', text: 'Новость успешно создана' };

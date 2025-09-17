@@ -1,10 +1,11 @@
 import dotenv from 'dotenv';
 import multer from 'multer';
 import path from 'path';
+import { cfg } from '../config';
 
 dotenv.config();
 
-const UPLOAD_DIR = process.env.UPLOAD_DIR || 'uploads';
+const UPLOAD_DIR = cfg.uploadDir;
 
 const storage = multer.diskStorage({
 	destination: (_req, _file, cb) => cb(null, UPLOAD_DIR),

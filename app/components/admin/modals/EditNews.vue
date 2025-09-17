@@ -51,7 +51,7 @@
 			<ContentEditor class="input" v-model="formData.content" />
 		</div>
 		<div class="flex items-center gap-4">
-			<button type="submit" class="admin-btn">Создать</button>
+			<button type="submit" class="admin-btn">Обновить</button>
 			<LoadingSpinner v-if="formData.loading" class="h-12 w-12 text-blue-500" />
 			<p class="text-sm" v-if="msg" :class="msg.type === 'error' ? 'text-red-500' : 'text-green-500'">{{ msg.text }}</p>
 		</div>
@@ -66,7 +66,7 @@ import LoadingSpinner from '~/components/LoadingSpinner.vue';
 const props = defineProps<{ item: NewsItem }>();
 
 const config = useRuntimeConfig();
-const backendUrl = config.public.backendUrl;
+const { backendUrl, bearerToken } = config.public;
 
 const formData = reactive({
 	content: props.item.content,
@@ -89,7 +89,7 @@ async function send(event: Event) {
 		return;
 	}
 
-	if (formData.content.length > 20) {
+	if (formData.content.length < 20) {
 		msg.value = { type: 'error', text: 'Пустое поле контента или контент слишком короткий' };
 		return;
 	}
@@ -113,6 +113,9 @@ async function send(event: Event) {
 		await $fetch(`${backendUrl}/news/${props.item.id}`, {
 			method: 'PUT',
 			body: fd,
+			headers: {
+				Authorization: `Bearer ${bearerToken}`,
+			},
 		});
 
 		msg.value = { type: 'success', text: 'Новость успешно обновлена' };

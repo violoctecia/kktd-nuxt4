@@ -19,6 +19,7 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			backendUrl: process.env.NUXT_PUBLIC_BACKEND_URL,
+			bearerToken: process.env.NUXT_PUBLIC_BEARER_TOKEN,
 		},
 	},
 

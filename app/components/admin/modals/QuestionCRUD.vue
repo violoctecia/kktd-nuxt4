@@ -35,7 +35,7 @@ import ContentEditor from '~/components/admin/ContentEditor.vue';
 import LoadingSpinner from '~/components/LoadingSpinner.vue';
 
 const config = useRuntimeConfig();
-const backendUrl = config.public.backendUrl;
+const { backendUrl, bearerToken } = config.public;
 
 const props = defineProps<{ item?: Faq; mode: 'create' | 'update' | 'delete' }>();
 
@@ -65,17 +65,26 @@ async function send(event: Event) {
 			await $fetch(`${backendUrl}/faq`, {
 				method: 'POST',
 				body: payloadData,
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
 			});
 			msg.value = { type: 'success', text: 'Вопрос успешно создан' };
 		} else if (props.mode === 'update') {
 			await $fetch(`${backendUrl}/faq/${id}`, {
 				method: 'PUT',
 				body: payloadData,
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
 			});
 			msg.value = { type: 'success', text: 'Вопрос успешно обновлён' };
 		} else if (props.mode === 'delete') {
 			await $fetch(`${backendUrl}/faq/${id}`, {
 				method: 'DELETE',
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
 			});
 			msg.value = { type: 'success', text: 'Вопрос успешно удалён' };
 		}

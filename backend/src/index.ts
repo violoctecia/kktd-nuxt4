@@ -14,9 +14,9 @@ import { ratingRoutes } from './modules/rating';
 
 const app = express();
 
-const port = cfg.port || 5000;
-const uploadDir = cfg.uploadDir || 'uploads';
-const prefix = cfg.prefix || 'api';
+const port = cfg.port;
+const uploadDir = cfg.uploadDir;
+const prefix = cfg.prefix;
 
 app.use(
 	cors({

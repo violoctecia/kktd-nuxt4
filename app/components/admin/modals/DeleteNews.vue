@@ -21,7 +21,7 @@ import LoadingSpinner from '~/components/LoadingSpinner.vue';
 const props = defineProps<{ id?: number }>();
 
 const config = useRuntimeConfig();
-const backendUrl = config.public.backendUrl;
+const { backendUrl, bearerToken } = config.public;
 
 const formData = reactive({
 	id: props.id,
@@ -43,10 +43,12 @@ async function send(event: Event) {
 
 		await $fetch(`${backendUrl}/news/${formData.id}`, {
 			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${bearerToken}`,
+			},
 		});
 
 		msg.value = { type: 'success', text: 'Новость успешно удалена' };
-		formData.id = '';
 	} catch (e) {
 		msg.value = { type: 'error', text: `Ошибка при удалении: ${String(e)}` };
 	} finally {

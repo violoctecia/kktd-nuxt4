@@ -23,7 +23,7 @@ import ContentEditor from '~/components/admin/ContentEditor.vue';
 import LoadingSpinner from '~/components/LoadingSpinner.vue';
 
 const config = useRuntimeConfig();
-const backendUrl = config.public.backendUrl;
+const { backendUrl, bearerToken } = config.public;
 
 const props = defineProps<{ item?: About; mode: 'create' | 'update' }>();
 
@@ -52,12 +52,18 @@ async function send(event: Event) {
 			await $fetch(`${backendUrl}/about`, {
 				method: 'POST',
 				body: payloadData,
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
 			});
 			msg.value = { type: 'success', text: 'Раздел успешно создан' };
 		} else {
 			await $fetch(`${backendUrl}/about/${id}`, {
 				method: 'PUT',
 				body: payloadData,
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
 			});
 			msg.value = { type: 'success', text: 'Раздел успешно обновлён' };
 		}
