@@ -8,7 +8,7 @@
 			</p>
 			<p>
 				<span class="font-medium">📞 Телефон:</span>
-				<a href="tel:+78432042970" class="hover:underline">+7 (843) 204-29-70</a>
+				<a href="tel:+78432042970" class="hover:underline">+7 (843) 293-00-84</a>
 			</p>
 			<p>
 				<span class="font-medium">✉️ Email:</span>

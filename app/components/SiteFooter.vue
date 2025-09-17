@@ -25,18 +25,19 @@ const getSpecialtyLink = (id: string) => `/specialties?specialty=${id}`;
 					цифровой экономики.
 				</p>
 				<div class="mt-4 flex gap-3">
-					<a href="#" class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-primary">
-						<i class="fab fa-vk"></i>
-					</a>
 					<a
-						href="https://t.me/KKTDInfoBot"
+						href="https://vk.com/kktid"
+						class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-primary"
+					>
+						<img src="../assets/svg/original/vk.svg" alt="VK" class="h-5 w-5" />
+					</a>
+
+					<a
+						href="https://t.me/kktdbot"
 						target="_blank"
 						class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-primary"
 					>
-						<i class="fab fa-telegram"></i>
-					</a>
-					<a href="#" class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-primary">
-						<i class="fab fa-youtube"></i>
+						<img src="../assets/svg/original/telegram.svg" alt="Telegram" class="h-5 w-5" />
 					</a>
 				</div>
 			</div>
@@ -50,7 +51,7 @@ const getSpecialtyLink = (id: string) => `/specialties?specialty=${id}`;
 					</li>
 					<li>
 						<i class="fas fa-phone mr-2"></i>
-						+7 (495) 123-45-67
+						+7 (843) 293-42-12
 					</li>
 					<li>
 						<i class="fas fa-envelope mr-2"></i>
