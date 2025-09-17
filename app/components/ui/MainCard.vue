@@ -30,7 +30,7 @@
 
 			<slot name="content"></slot>
 		</div>
-		<nuxt-link :to="href" class="absolute inset-0 z-10" :aria-label="hrefText" />
+		<nuxt-link v-if="!disableLink" :to="href" class="absolute inset-0 z-10" :aria-label="hrefText" />
 	</article>
 </template>
 
@@ -45,5 +45,6 @@ defineProps<{
 	imgAlt: string;
 	title: string;
 	cardTitleTag: titleTag;
+	disableLink?: boolean;
 }>();
 </script>
