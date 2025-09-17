@@ -20,7 +20,7 @@
 		</div>
 
 		<div class="flex items-center gap-4">
-			<button type="submit" class="send-btn" :class="mode === 'delete' ? 'red' : ''">
+			<button type="submit" class="admin-btn" :class="mode === 'delete' ? 'red' : ''">
 				{{ mode === 'create' ? 'Создать' : mode === 'update' ? 'Обновить' : 'Удалить' }}
 			</button>
 			<LoadingSpinner v-if="formData.loading" class="h-12 w-12 text-blue-500" />
@@ -86,33 +86,3 @@ async function send(event: Event) {
 	}
 }
 </script>
-
-<style scoped lang="scss">
-h3 {
-	@apply mb-6 text-lg font-medium;
-}
-
-.input-group {
-	@apply mb-6 flex flex-col gap-2;
-
-	.label {
-		@apply text-base;
-	}
-
-	.input {
-		@apply block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500;
-
-		&.category {
-			@apply w-fit;
-		}
-	}
-}
-
-.send-btn {
-	@apply flex items-center justify-center rounded bg-blue-500 px-4 py-2 text-center text-white transition-colors duration-200 hover:bg-blue-600;
-
-	&.red {
-		@apply bg-red-500 hover:bg-red-600;
-	}
-}
-</style>

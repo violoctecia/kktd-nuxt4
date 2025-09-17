@@ -19,4 +19,7 @@ export interface Faq {
 	content: string;
 }
 
-export type ModalType = 'admission' | 'custom';
+export interface About {
+	id: number;
+	content: string;
+}

@@ -51,7 +51,7 @@
 			<ContentEditor class="input" v-model="formData.content" />
 		</div>
 		<div class="flex items-center gap-4">
-			<button type="submit" class="send-btn">Создать</button>
+			<button type="submit" class="admin-btn">Создать</button>
 			<LoadingSpinner v-if="formData.loading" class="h-12 w-12 text-blue-500" />
 			<p class="text-sm" v-if="msg" :class="msg.type === 'error' ? 'text-red-500' : 'text-green-500'">{{ msg.text }}</p>
 		</div>
@@ -162,29 +162,3 @@ function onDateInput(e: Event) {
 	formData.date = formatted;
 }
 </script>
-
-<style scoped lang="scss">
-h3 {
-	@apply mb-6 text-lg font-medium;
-}
-
-.input-group {
-	@apply mb-6 flex flex-col gap-2;
-
-	.label {
-		@apply text-base;
-	}
-
-	.input {
-		@apply block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500;
-
-		&.category {
-			@apply w-fit;
-		}
-	}
-}
-
-.send-btn {
-	@apply flex items-center justify-center rounded bg-blue-500 px-4 py-2 text-center text-white transition-colors duration-200 hover:bg-blue-600;
-}
-</style>

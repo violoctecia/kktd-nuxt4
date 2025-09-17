@@ -1,17 +1,18 @@
 <template>
 	<div>
 		<h1>Управление новостями</h1>
-		<div class="mb-12 flex w-full flex-row items-center gap-4 overflow-auto">
+		<div class="head-tools">
 			<button class="admin-btn" @click="showCreateModal">Создать новость</button>
 			<button class="admin-btn" @click="refresh()">Перезагрузить список</button>
 		</div>
 		<h2>Текущие новости:</h2>
 		<div class="flex w-full items-start justify-start">
 			<div
-				class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-x-4 sm:gap-y-8 lg:grid-cols-3 xl:grid-cols-4"
+				class="grid w-full grid-cols-1 gap-4 rounded-lg sm:grid-cols-2 sm:gap-x-4 sm:gap-y-8 lg:grid-cols-3 xl:grid-cols-4"
 				v-if="newsData?.length"
 			>
 				<MainCard
+					class="bg-white shadow-md"
 					v-for="item in newsData"
 					:key="item.alt"
 					:img-src="item.img"
@@ -42,7 +43,7 @@
 						<p class="mt-auto text-sm leading-4 text-black/80 md:text-base md:leading-5" itemprop="description">
 							{{ item.text }}
 						</p>
-						<div class="tools">
+						<div class="list-item-tools">
 							<span class="mb-2">ID новости: {{ item.id }}</span>
 							<button class="admin-btn sm" @click="showEditModal(item)">Редактировать новость</button>
 							<button class="admin-btn red sm" @click="showDeleteModal(item.id)">Удалить новость</button>
@@ -100,9 +101,3 @@ const {
 	lazy: true,
 });
 </script>
-
-<style scoped lang="scss">
-.tools {
-	@apply mt-8 flex flex-col gap-2 border-t border-gray-300 pt-4;
-}
-</style>
