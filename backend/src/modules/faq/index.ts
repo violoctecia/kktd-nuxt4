@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import faqController from './faq.controller';
+import { authMiddleware } from '../../middleware/auth';
+import { create, getAll, remove, update } from './faq.controller';
 
 const router = Router();
 
-router.get('/', faqController.getAll);
-router.post('/', faqController.create);
-router.put('/:id', faqController.update);
-router.delete('/:id', faqController.remove);
+router.get('/', getAll); // публичный
+router.post('/', authMiddleware, create);
+router.put('/:id', authMiddleware, update);
+router.delete('/:id', authMiddleware, remove);
 
 export const faqRoutes = router;

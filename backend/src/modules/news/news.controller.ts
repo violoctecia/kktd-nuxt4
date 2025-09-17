@@ -46,5 +46,3 @@ export const remove = async (req: Request, res: Response) => {
 	await NewsService.delete(Number(id));
 	res.status(204).send();
 };
-
-export default { getAll, create, update, remove, getById };

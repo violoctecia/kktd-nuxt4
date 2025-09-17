@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { RatingService } from '../services/ratingService';
+import { RatingService } from './rating.service';
 
 export const getRating = async (_req: Request, res: Response) => {
 	const items = await RatingService.getAll();

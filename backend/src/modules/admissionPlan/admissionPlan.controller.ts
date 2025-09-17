@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { AdmissionPlanService } from '../services/admissionPlanService';
+import { AdmissionPlanService } from './admissionPlan.service';
 
 export const getAdmissionPlan = async (_req: Request, res: Response) => {
 	const items = await AdmissionPlanService.getAll();
