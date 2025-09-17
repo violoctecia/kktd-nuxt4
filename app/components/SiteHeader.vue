@@ -33,12 +33,7 @@
 						>
 							{{ i.label }}
 						</nuxt-link>
-						<MainButton
-							v-else
-							class="ml-2"
-							:class="isMenuToggled ? '!mx-4 mt-4 w-full' : ''"
-							@click="modalStore.open('admission')"
-						>
+						<MainButton v-else class="ml-2" :class="isMenuToggled ? '!mx-4 mt-4 w-full' : ''" @click="showModal">
 							{{ i.label }}
 						</MainButton>
 					</li>
@@ -60,10 +55,15 @@
 </template>
 
 <script setup lang="ts">
+import ModalAdmissionContent from '~/components/modals/ModalAdmissionContent.vue';
 import MainButton from '~/components/ui/MainButton.vue';
 import { useModalStore } from '~/store/modalsStore';
 
-const modalStore = useModalStore();
+const modal = useModalStore();
+
+function showModal() {
+	modal.openModal(ModalAdmissionContent);
+}
 
 const isMenuToggled = ref(false);
 

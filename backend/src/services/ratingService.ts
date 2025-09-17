@@ -1,5 +1,5 @@
-import type { RatingItem } from '../models/types';
-import pool from '../utils/db';
+import pool from '../db/prisma';
+import type { RatingItem } from '../types/types';
 
 class RatingServiceClass {
 	async getAll(): Promise<RatingItem[]> {

@@ -1,16 +1,29 @@
-import type { ModalType } from '#shared/types';
 import { defineStore } from 'pinia';
+import { markRaw, ref } from 'vue';
+
+type ModalContent = {
+	component: any;
+	props?: Record<string, any>;
+};
 
 export const useModalStore = defineStore('modal', () => {
-	const currentModal = ref<ModalType | null>(null);
+	const isOpen = ref(false);
+	const content = ref<ModalContent | null>(null);
 
-	function open(type: ModalType) {
-		currentModal.value = type;
+	function openModal(component: any, props?: Record<string, any>) {
+		content.value = { component: markRaw(component), props };
+		isOpen.value = true;
 	}
 
-	function close() {
-		currentModal.value = null;
+	function closeModal() {
+		isOpen.value = false;
+		content.value = null;
 	}
 
-	return { open, close, currentModal };
+	return {
+		isOpen,
+		content,
+		openModal,
+		closeModal,
+	};
 });

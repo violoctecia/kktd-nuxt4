@@ -1,39 +1,41 @@
 import cors from 'cors';
-import dotenv from 'dotenv';
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
-
+import { cfg } from './config';
 import errorHandler from './middleware/errorHandler';
-import aboutRoutes from './routes/aboutRoutes';
-import planRoutes from './routes/admissionPlanRoutes';
-import enrolledRoutes from './routes/enrolledRoutes';
-import faqRoutes from './routes/faqRoutes';
-import newsRoutes from './routes/newsRoutes';
-import ratingRoutes from './routes/ratingRoutes';
 
-dotenv.config();
+import { aboutRoutes } from './modules/about';
+import { faqRoutes } from './modules/faq';
+import { newsRoutes } from './modules/news';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-const UPLOAD_DIR = process.env.UPLOAD_DIR || 'uploads';
 
-app.use(cors());
+const port = cfg.port || 5000;
+const uploadDir = cfg.uploadDir || 'uploads';
+const prefix = cfg.prefix || 'api';
+
+app.use(
+	cors({
+		origin: 'http://localhost:3000',
+	}),
+);
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-const uploadsPath = path.join(process.cwd(), UPLOAD_DIR);
+const uploadsPath = path.join(process.cwd(), uploadDir);
 if (!fs.existsSync(uploadsPath)) fs.mkdirSync(uploadsPath, { recursive: true });
-app.use('/' + UPLOAD_DIR, express.static(uploadsPath));
+app.use('/' + uploadDir, express.static(uploadsPath));
 
 // API routes
-app.use('/api/about', aboutRoutes);
-app.use('/api/news', newsRoutes);
-app.use('/api/faq', faqRoutes);
-app.use('/api/enrolled', enrolledRoutes);
-app.use('/api/admission-plan', planRoutes);
-app.use('/api/rating', ratingRoutes);
+app.use(`${prefix}/about`, aboutRoutes);
+app.use(`${prefix}/faq`, faqRoutes);
+app.use(`${prefix}/news`, newsRoutes);
+
+// app.use(`${prefix}/enrolled`, enrolledRoutes);
+// app.use(`${prefix}/admission-plan`, planRoutes);
+// app.use(`${prefix}/rating`, ratingRoutes);
 
 app.use(errorHandler);
 
-app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`));
+app.listen(port, () => console.log(`Server running on port ${port} with prefix ${prefix}`));

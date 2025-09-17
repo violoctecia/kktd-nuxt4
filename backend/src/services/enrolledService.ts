@@ -1,5 +1,5 @@
-import type { EnrolledItem } from '../models/types';
-import pool from '../utils/db';
+import pool from '../db/prisma';
+import type { EnrolledItem } from '../types/types';
 
 export class EnrolledServiceClass {
 	// Получить всех абитуриентов
