@@ -1,3 +1,4 @@
+import { cfg } from './config';
 import prisma from './db/prisma';
 
 async function main() {
@@ -14,8 +15,8 @@ async function main() {
 
 	// --- Faq ---
 	const faqs = [
-		{ question: 'Как подать заявку?', content: 'Вы можете подать заявку онлайн через наш сайт.' },
-		{ question: 'Какие формы обучения доступны?', content: 'Очная и заочная формы обучения.' },
+		{ question: 'Как подать заявку?', content: '<p>Вы можете подать заявку онлайн через наш сайт.</p>' },
+		{ question: 'Какие формы обучения доступны?', content: '<p>Очная и заочная формы обучения.</p>' },
 	];
 	for (const faq of faqs) {
 		await prisma.faq.create({ data: faq });
@@ -24,9 +25,9 @@ async function main() {
 	// --- News ---
 	const newsItems = [
 		{
-			img: 'news1.jpg',
+			img: `${cfg.domain}${cfg.uploadDir}/seed/1758105153823-cyber.webp`,
 			alt: 'Новость 1',
-			date: '2025-09-17',
+			date: '17.09.2025',
 			title: 'Начало нового учебного года',
 			text: 'Учебный год начался успешно.',
 			slug: 'new-year-2025',
@@ -35,9 +36,9 @@ async function main() {
 			content: 'Подробности начала учебного года...',
 		},
 		{
-			img: 'news2.jpg',
+			img: `${cfg.domain}${cfg.uploadDir}/seed/1758130514964-ecology.webp`,
 			alt: 'Новость 2',
-			date: '2025-08-01',
+			date: '01.08.2025',
 			title: 'Новые курсы дизайна',
 			text: 'Запущены новые курсы по дизайну.',
 			slug: 'design-courses-2025',
@@ -50,52 +51,52 @@ async function main() {
 		await prisma.news.create({ data: news });
 	}
 
-	// --- Enrolled ---
-	const enrolledStudents = [
-		{ full_name: 'Иван Иванов', specialty: 'Программирование', group_name: 'ПР-101' },
-		{ full_name: 'Мария Петрова', specialty: 'Дизайн', group_name: 'ДИ-102' },
-		{ full_name: 'Алексей Сидоров', specialty: 'Программирование', group_name: 'ПР-103' },
-	];
-	for (const student of enrolledStudents) {
-		await prisma.enrolled.create({ data: student });
-	}
-
-	// --- Rating ---
-	const ratings = [
-		{ full_name: 'Иван Иванов', specialty: 'Программирование', score: 95 },
-		{ full_name: 'Мария Петрова', specialty: 'Дизайн', score: 88 },
-		{ full_name: 'Алексей Сидоров', specialty: 'Программирование', score: 78 },
-	];
-	for (const rating of ratings) {
-		await prisma.rating.create({ data: rating });
-	}
-
-	// --- AdmissionPlan ---
-	const plans = [
-		{
-			specialty: 'Программирование',
-			qualification: 'Бакалавр',
-			form: 'Очная',
-			duration: '4 года',
-			budget_places: 10,
-			paid_places: 20,
-			cost: 120000,
-			accreditation: true,
-		},
-		{
-			specialty: 'Дизайн',
-			qualification: 'Бакалавр',
-			form: 'Заочная',
-			duration: '4 года',
-			budget_places: 5,
-			paid_places: 15,
-			cost: 100000,
-			accreditation: true,
-		},
-	];
-	for (const plan of plans) {
-		await prisma.admissionPlan.create({ data: plan });
-	}
+	// // --- Enrolled ---
+	// const enrolledStudents = [
+	// 	{ full_name: 'Иван Иванов', specialty: 'Программирование', group_name: 'ПР-101' },
+	// 	{ full_name: 'Мария Петрова', specialty: 'Дизайн', group_name: 'ДИ-102' },
+	// 	{ full_name: 'Алексей Сидоров', specialty: 'Программирование', group_name: 'ПР-103' },
+	// ];
+	// for (const student of enrolledStudents) {
+	// 	await prisma.enrolled.create({ data: student });
+	// }
+	//
+	// // --- Rating ---
+	// const ratings = [
+	// 	{ full_name: 'Иван Иванов', specialty: 'Программирование', score: 95 },
+	// 	{ full_name: 'Мария Петрова', specialty: 'Дизайн', score: 88 },
+	// 	{ full_name: 'Алексей Сидоров', specialty: 'Программирование', score: 78 },
+	// ];
+	// for (const rating of ratings) {
+	// 	await prisma.rating.create({ data: rating });
+	// }
+	//
+	// // --- AdmissionPlan ---
+	// const plans = [
+	// 	{
+	// 		specialty: 'Программирование',
+	// 		qualification: 'Бакалавр',
+	// 		form: 'Очная',
+	// 		duration: '4 года',
+	// 		budget_places: 10,
+	// 		paid_places: 20,
+	// 		cost: 120000,
+	// 		accreditation: true,
+	// 	},
+	// 	{
+	// 		specialty: 'Дизайн',
+	// 		qualification: 'Бакалавр',
+	// 		form: 'Заочная',
+	// 		duration: '4 года',
+	// 		budget_places: 5,
+	// 		paid_places: 15,
+	// 		cost: 100000,
+	// 		accreditation: true,
+	// 	},
+	// ];
+	// for (const plan of plans) {
+	// 	await prisma.admissionPlan.create({ data: plan });
+	// }
 
 	console.log('Seeding finished.');
 }

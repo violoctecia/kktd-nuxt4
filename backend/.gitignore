@@ -24,4 +24,7 @@ logs
 !.env.example
 
 /src/generated/prisma
+
 /uploads
+!/uploads/seed
+
