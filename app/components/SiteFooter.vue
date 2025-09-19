@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import IconSprite from '~/components/IconSprite.vue';
+
 const year: number = new Date().getFullYear();
 
 const specialtiesPreview = [
@@ -24,20 +26,20 @@ const getSpecialtyLink = (id: string) => `/specialties?specialty=${id}`;
 					Профессиональное образование в сфере информационных технологий и легкой промышленности. Готовим специалистов для
 					цифровой экономики.
 				</p>
-				<div class="mt-4 flex gap-3">
+				<div class="mt-4 flex gap-3 text-white">
 					<a
 						href="https://vk.com/kktid"
-						class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-primary"
+						class="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-black hover:bg-primary"
 					>
-						<img src="../assets/svg/original/vk.svg" alt="VK" class="h-5 w-5" />
+						<IconSprite name="vk" class="text-white" />
 					</a>
 
 					<a
 						href="https://t.me/kktdbot"
 						target="_blank"
-						class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-primary"
+						class="flex h-9 w-9 items-center justify-center rounded-full bg-black text-white hover:bg-primary"
 					>
-						<img src="../assets/svg/original/telegram.svg" alt="Telegram" class="h-5 w-5" />
+						<IconSprite name="telegram" class="text-white" />
 					</a>
 				</div>
 			</div>
@@ -72,11 +74,21 @@ const getSpecialtyLink = (id: string) => `/specialties?specialty=${id}`;
 			<div>
 				<h3 class="mb-4 text-lg font-semibold text-primaryLight">Абитуриенту</h3>
 				<ul class="space-y-2 text-sm">
-					<li><NuxtLink to="/abiturient">Как поступить</NuxtLink></li>
-					<li><NuxtLink to="/specialties">Специальности</NuxtLink></li>
-					<li><NuxtLink to="/faq">Частые вопросы</NuxtLink></li>
-					<li><NuxtLink to="/rating">Рейтинг абитуриентов</NuxtLink></li>
-					<li><NuxtLink to="/enrolled">Список предпочтительных к зачислению</NuxtLink></li>
+					<li>
+						<NuxtLink to="/abiturient">Как поступить</NuxtLink>
+					</li>
+					<li>
+						<NuxtLink to="/specialties">Специальности</NuxtLink>
+					</li>
+					<li>
+						<NuxtLink to="/faq">Частые вопросы</NuxtLink>
+					</li>
+					<li>
+						<NuxtLink to="/rating">Рейтинг абитуриентов</NuxtLink>
+					</li>
+					<li>
+						<NuxtLink to="/enrolled">Список предпочтительных к зачислению</NuxtLink>
+					</li>
 				</ul>
 			</div>
 		</div>

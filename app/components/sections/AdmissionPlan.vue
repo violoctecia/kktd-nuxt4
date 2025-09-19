@@ -1,15 +1,14 @@
 <script setup lang="ts">
-interface AdmissionRow {
-	funding: string;
-	specialty: string;
-	qualification: string;
-	base: string;
-	form: string;
-	places: string;
-}
+import type { AdmissionPlan } from '#shared/types';
 
-const { data: tableData, pending, error } = await useFetch<AdmissionRow[]>('/api/admission-plan');
-
+const {
+	data: tableData,
+	pending,
+	error,
+} = await useFetch<Required<AdmissionPlan>[]>('/admission-plan?year=2025&withSpecialty=true', {
+	baseURL: useRuntimeConfig().public.backendUrl,
+});
+console.log(tableData.value);
 const apply = () => {
 	alert('Заявка отправлена!');
 };
@@ -29,12 +28,15 @@ const apply = () => {
 			<table class="w-full border-collapse">
 				<thead>
 					<tr class="bg-blue-900 text-white">
-						<th class="p-3 text-start">Источник финансирования</th>
-						<th class="p-3 text-start">Специальность/профессия</th>
+						<th class="p-3 text-start">Спецаильность</th>
 						<th class="p-3 text-start">Квалификация</th>
-						<th class="p-3 text-start">База (классы)</th>
+						<th class="p-3 text-start">Код</th>
+						<th class="p-3 text-start">Источник финансирования</th>
+						<th class="p-3 text-start">Цена</th>
+						<th class="p-3 text-start">Кол-во мест</th>
+
+						<th class="p-3 text-start">База</th>
 						<th class="p-3 text-start">Форма</th>
-						<th class="p-3 text-start">Мест</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,12 +46,14 @@ const apply = () => {
 						:class="index % 2 === 0 ? 'bg-gray-50' : ''"
 						class="transition-colors hover:bg-blue-50"
 					>
-						<td class="border-b p-3">{{ row.funding }}</td>
-						<td class="border-b p-3">{{ row.specialty }}</td>
-						<td class="border-b p-3">{{ row.qualification }}</td>
-						<td class="border-b p-3">{{ row.base }}</td>
-						<td class="border-b p-3">{{ row.form }}</td>
+						<td class="border-b p-3">{{ row.specialty.name }}</td>
+						<td class="border-b p-3">{{ row.specialty.qualification }}</td>
+						<td class="border-b p-3">{{ row.specialty.code }}</td>
+						<td class="border-b p-3">{{ row.funding === 'BUDGET' ? 'Бюджет' : 'Не бюджет' }}</td>
+						<td class="border-b p-3">{{ row.price || '-' }}</td>
 						<td class="border-b p-3">{{ row.places }}</td>
+						<td class="border-b p-3">{{ row.specialty.base }}</td>
+						<td class="border-b p-3">{{ row.specialty.form }}</td>
 					</tr>
 				</tbody>
 			</table>

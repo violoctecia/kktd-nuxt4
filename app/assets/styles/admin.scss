@@ -25,13 +25,16 @@
 			thead {
 				@apply whitespace-nowrap bg-gray-200 text-xs uppercase text-gray-700;
 			}
+
 			th {
 				@apply px-6 py-3;
 			}
+
 			tbody {
 				tr {
 					@apply border-b border-gray-200 bg-white;
 				}
+
 				tr:nth-child(even) {
 					@apply bg-gray-50;
 				}
@@ -64,7 +67,7 @@ h3 {
 	}
 
 	.router-link-exact-active {
-		@apply !bg-gray-50 text-base font-medium text-stone-900;
+		@apply bg-gray-50 text-base font-medium text-stone-900;
 	}
 }
 

@@ -2,8 +2,11 @@ import prisma from '../../db/prisma';
 import type { AdmissionPlan } from '../../types/types';
 
 class AdmissionPlanServiceClass {
-	async getAll(filter?: Partial<{ year: number; specialtyId: number }>): Promise<AdmissionPlan[]> {
-		return prisma.admissionPlan.findMany({ where: filter });
+	async getAll(filter?: Partial<{ year: number; specialtyId: number }>, withSpecialty: boolean = false): Promise<AdmissionPlan[]> {
+		return prisma.admissionPlan.findMany({
+			where: filter,
+			include: withSpecialty ? { specialty: true } : undefined,
+		});
 	}
 
 	async create(data: Omit<AdmissionPlan, 'id'>): Promise<AdmissionPlan> {

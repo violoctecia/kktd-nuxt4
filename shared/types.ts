@@ -43,6 +43,7 @@ export interface AdmissionPlan {
 	funding: Funding;
 	price?: number;
 	places: number;
+	specialty?: Specialty;
 }
 
 export interface Abiturient {

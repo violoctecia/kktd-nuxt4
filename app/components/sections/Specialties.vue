@@ -9,10 +9,10 @@
 			v-for="specialty in specialties"
 			:key="specialty.id"
 			:id="`specialty-${specialty.id}`"
-			class="specialty-card mb-6 rounded-xl border-l-4 border-blue-500 bg-white p-6 shadow-lg transition-transform duration-300 hover:-translate-y-0.5"
+			class="specialty-card mb-6 rounded-xl border-l-4 border-blue-500 bg-gray-100 p-6 shadow-lg transition-transform duration-300 hover:-translate-y-0.5"
 		>
 			<h3 class="mb-6 text-xl font-semibold text-blue-900">{{ specialty.title }}</h3>
-			<div class="specialty-info mb-6 grid grid-cols-1 gap-4 rounded-lg bg-blue-50 p-4 md:grid-cols-2">
+			<div class="specialty-info mb-6 grid grid-cols-1 gap-4 rounded-lg bg-gray-200 p-4 md:grid-cols-2">
 				<div class="info-item flex items-center gap-3">
 					<i class="fas fa-graduation-cap w-5 text-blue-500"></i>
 					<span>{{ specialty.form }}</span>
@@ -163,21 +163,26 @@ const specialties = [
 
 const route = useRoute();
 
-onMounted(() => {
-	const specialtyId = route.query.specialty;
-	if (specialtyId) {
-		setTimeout(() => {
-			const element = document.getElementById(`specialty-${specialtyId}`);
-			if (element) {
-				const headerHeight = document.querySelector('header')?.offsetHeight || 0;
-				const elementPosition = element.offsetTop - headerHeight - 20;
-				window.scrollTo({ top: elementPosition, behavior: 'smooth' });
-				element.classList.add('highlighted');
-				setTimeout(() => element.classList.remove('highlighted'), 3000);
-			}
-		}, 800);
-	}
-});
+watch(
+	() => route.query.specialty,
+	(specialtyId) => {
+		if (specialtyId) {
+			setTimeout(() => {
+				const element = document.getElementById(`specialty-${specialtyId}`);
+				if (element) {
+					const headerHeight = document.querySelector('header')?.offsetHeight || 0;
+					const elementPosition = element.offsetTop - headerHeight - 20;
+					window.scrollTo({ top: elementPosition, behavior: 'smooth' });
+					element.classList.add('highlighted');
+					setTimeout(() => element.classList.remove('highlighted'), 3000);
+				}
+			}, 800);
+		}
+	},
+	{
+		immediate: true,
+	},
+);
 </script>
 
 <style scoped>

@@ -2,13 +2,14 @@ import type { Request, Response } from 'express';
 import { AdmissionPlanService } from './admissionPlan.service';
 
 export const getAdmissionPlan = async (req: Request, res: Response) => {
-	const { year, specialtyId } = req.query;
+	const { year, specialtyId, withSpecialty } = req.query;
 
 	const filter: any = {};
 	if (year) filter.year = Number(year);
 	if (specialtyId) filter.specialtyId = Number(specialtyId);
 
-	const items = await AdmissionPlanService.getAll(Object.keys(filter).length ? filter : undefined);
+	const items = await AdmissionPlanService.getAll(Object.keys(filter).length ? filter : undefined, withSpecialty === 'true');
+
 	res.json(items);
 };
 
