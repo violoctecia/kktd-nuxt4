@@ -8,8 +8,8 @@ class NewsServiceClass {
 		return prisma.news.findMany();
 	}
 
-	async getById(id: number): Promise<NewsItem | null> {
-		return prisma.news.findUnique({ where: { id } });
+	async getBySlug(slug: NewsItem['slug']): Promise<NewsItem | null> {
+		return prisma.news.findUnique({ where: { slug } });
 	}
 
 	async create(data: Omit<NewsItem, 'id' | 'slug' | 'isoDate'>): Promise<NewsItem> {
@@ -17,6 +17,7 @@ class NewsServiceClass {
 			...data,
 			slug: slugify(data.title),
 			iso_date: toIsoDate(data.date),
+			alt: data.title,
 		};
 		return prisma.news.create({ data: preparedData });
 	}

@@ -1,5 +1,5 @@
 <template>
-	<section id="about" class="container__sm pb-16 text-black md:pb-24">
+	<section id="about" class="container__sm text-black">
 		<h2 class="h2 !text-center">О нашем колледже</h2>
 		<p class="mb-8 text-base">
 			Казанский колледж технологии и дизайна (ранее Казанский техникум легкой промышленности) создан 1 мая 1920 года. Колледж является

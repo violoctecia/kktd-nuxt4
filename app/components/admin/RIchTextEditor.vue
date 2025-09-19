@@ -17,7 +17,7 @@
 			<button type="button" @click="setLink">Добавить ссылку</button>
 		</div>
 
-		<editor-content :editor="editor" class="editor" />
+		<editor-content :editor="editor" class="html-content" />
 	</div>
 </template>
 
@@ -102,7 +102,7 @@ function setLink() {
 <style lang="scss">
 .news-editor {
 	.toolbar {
-		@apply mb-4 flex flex-row flex-wrap gap-2;
+		@apply mb-2 flex flex-row flex-wrap gap-2 border-b pb-6;
 
 		button {
 			@apply rounded bg-gray-200 px-2 py-1 text-sm;
@@ -110,41 +110,6 @@ function setLink() {
 			&.active {
 				@apply bg-gray-300;
 			}
-		}
-	}
-
-	.editor {
-		border: 1px solid #ccc;
-		padding: 0.5rem;
-		border-radius: 6px;
-		background-color: #fefefe;
-
-		h2 {
-			@apply mb-2 mt-4 text-2xl font-semibold;
-		}
-
-		h3 {
-			@apply mb-2 mt-3 text-xl font-medium;
-		}
-
-		p {
-			@apply mb-2;
-		}
-
-		ul {
-			@apply mb-2 ml-6 list-disc;
-		}
-
-		ol {
-			@apply mb-2 ml-6 list-decimal;
-		}
-
-		li {
-			@apply mb-1;
-		}
-
-		a {
-			@apply text-blue-400;
 		}
 	}
 }

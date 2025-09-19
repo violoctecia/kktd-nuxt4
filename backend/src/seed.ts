@@ -1,11 +1,11 @@
 import { cfg } from './config';
 import prisma from './db/prisma';
+import type { Abiturient, AdmissionPlan, FaqItem, NewsItem, Specialty } from './types/types';
 
 async function main() {
 	console.log('Seeding database...');
 
 	// --- About ---
-
 	await prisma.about.create({
 		data: {
 			content:
@@ -14,16 +14,22 @@ async function main() {
 	});
 
 	// --- Faq ---
-	const faqs = [
+	const faqs: FaqItem[] = [
+		{
+			question: 'Какие специальности есть в ККТД в 2024 году?',
+			content:
+				'<h3>📚 Актуальные специальности в 2024 году:</h3><ul><li>09.02.07 — Информационные системы и программирование</li><li>29.02.10 — Конструирование, моделирование и технология изготовления изделий легкой промышленности (по видам)</li><li>29.02.05 — Технология кожи и меха</li><li>29.02.05 — Технология текстильных изделий (по видам)</li><li>38.02.01 — Экономика и бухгалтерский учет (по отраслям)</li><li>38.02.05 — Товароведение и экспертиза качества потребительских товаров</li></ul>',
+		},
 		{ question: 'Как подать заявку?', content: '<p>Вы можете подать заявку онлайн через наш сайт.</p>' },
 		{ question: 'Какие формы обучения доступны?', content: '<p>Очная и заочная формы обучения.</p>' },
 	];
-	for (const faq of faqs) {
-		await prisma.faq.create({ data: faq });
-	}
+	await prisma.faq.createMany({
+		data: faqs,
+		skipDuplicates: true,
+	});
 
 	// --- News ---
-	const newsItems = [
+	const newsItems: NewsItem[] = [
 		{
 			img: `${cfg.domain}${cfg.uploadDir}/seed/1758105153823-cyber.webp`,
 			alt: 'Новость 1',
@@ -33,7 +39,7 @@ async function main() {
 			slug: 'new-year-2025',
 			iso_date: '2025-09-17T00:00:00.000Z',
 			categories: ['Образование', 'Новости'],
-			content: 'Подробности начала учебного года...',
+			content: '<h2>Подробности начала учебного года..<h2/><p>Текст....</p>',
 		},
 		{
 			img: `${cfg.domain}${cfg.uploadDir}/seed/1758130514964-ecology.webp`,
@@ -46,57 +52,101 @@ async function main() {
 			categories: ['Курсы', 'Новости'],
 			content: 'Подробности новых курсов дизайна...',
 		},
+		{
+			img: `${cfg.domain}${cfg.uploadDir}/seed/1758130514964-ecology.webp`,
+			alt: 'Новость 2',
+			date: '01.08.2025',
+			title: 'Новые курсы дизайна 2',
+			text: 'Запущены новые курсы по дизайну.',
+			slug: 'design-courses-2025',
+			iso_date: '2025-08-01T00:00:00.000Z',
+			categories: ['Курсы'],
+			content: 'Подробности новых курсов дизайна 2...',
+		},
 	];
-	for (const news of newsItems) {
-		await prisma.news.create({ data: news });
+	await prisma.news.createMany({
+		data: newsItems,
+		skipDuplicates: true,
+	});
+
+	// --- Specialty ---
+	const specialtiesData: Specialty[] = [
+		{
+			code: '09.02.07',
+			name: 'Информационные системы и программирование',
+			qualification: 'Программист',
+			durationMonths: 4,
+			base: 9,
+			form: 'Очная',
+		},
+		{
+			code: '09.02.07',
+			name: 'Информационные системы и программирование',
+			qualification: 'Специалист по информационным системам',
+			durationMonths: 4,
+			base: 9,
+			form: 'Очная',
+		},
+		{
+			code: '29.02.10',
+			name: 'Конструирование, моделирование и технология изделий легкой промышленности',
+			qualification: 'Швейные изделия',
+			durationMonths: 4,
+			base: 9,
+			form: 'Очная',
+		},
+	];
+	await prisma.specialty.createMany({
+		data: specialtiesData,
+		skipDuplicates: true,
+	});
+
+	const specialties = await prisma.specialty.findMany();
+
+	// --- AdmissionPlan ---
+	const admissionPlans: AdmissionPlan[] = specialties.map((s: Specialty) => ({
+		specialtyId: s.id,
+		year: 2025,
+		funding: 'BUDGET',
+		price: null,
+		places: 20,
+	}));
+	await prisma.admissionPlan.createMany({
+		data: admissionPlans,
+		skipDuplicates: true,
+	});
+
+	// --- Abiturients ---
+	const studentsPerSpecialty = 5;
+	const abiturients: Abiturient[] = [];
+
+	const firstNames = ['Алексей', 'Мария', 'Иван', 'Елена', 'Дмитрий', 'Ольга', 'Сергей', 'Анна'];
+	const lastNames = ['Иванов', 'Петров', 'Сидоров', 'Кузнецова', 'Смирнов', 'Попова', 'Ковалев', 'Николаева'];
+	const middleNames = ['Александрович', 'Андреевна', 'Иванович', 'Петровна', 'Дмитриевич', 'Сергеевна'];
+
+	function getRandomItem<T>(arr: T[]): T {
+		return arr[Math.floor(Math.random() * arr.length)];
 	}
 
-	// // --- Enrolled ---
-	// const enrolledStudents = [
-	// 	{ full_name: 'Иван Иванов', specialty: 'Программирование', group_name: 'ПР-101' },
-	// 	{ full_name: 'Мария Петрова', specialty: 'Дизайн', group_name: 'ДИ-102' },
-	// 	{ full_name: 'Алексей Сидоров', specialty: 'Программирование', group_name: 'ПР-103' },
-	// ];
-	// for (const student of enrolledStudents) {
-	// 	await prisma.enrolled.create({ data: student });
-	// }
-	//
-	// // --- Rating ---
-	// const ratings = [
-	// 	{ full_name: 'Иван Иванов', specialty: 'Программирование', score: 95 },
-	// 	{ full_name: 'Мария Петрова', specialty: 'Дизайн', score: 88 },
-	// 	{ full_name: 'Алексей Сидоров', specialty: 'Программирование', score: 78 },
-	// ];
-	// for (const rating of ratings) {
-	// 	await prisma.rating.create({ data: rating });
-	// }
-	//
-	// // --- AdmissionPlan ---
-	// const plans = [
-	// 	{
-	// 		specialty: 'Программирование',
-	// 		qualification: 'Бакалавр',
-	// 		form: 'Очная',
-	// 		duration: '4 года',
-	// 		budget_places: 10,
-	// 		paid_places: 20,
-	// 		cost: 120000,
-	// 		accreditation: true,
-	// 	},
-	// 	{
-	// 		specialty: 'Дизайн',
-	// 		qualification: 'Бакалавр',
-	// 		form: 'Заочная',
-	// 		duration: '4 года',
-	// 		budget_places: 5,
-	// 		paid_places: 15,
-	// 		cost: 100000,
-	// 		accreditation: true,
-	// 	},
-	// ];
-	// for (const plan of plans) {
-	// 	await prisma.admissionPlan.create({ data: plan });
-	// }
+	specialties.forEach((s: Required<Specialty>) => {
+		for (let i = 0; i < studentsPerSpecialty; i++) {
+			const fullName = `${getRandomItem(lastNames)} ${getRandomItem(firstNames)} ${getRandomItem(middleNames)}`;
+
+			const score = parseFloat((Math.random() * 2 + 3).toFixed(1));
+
+			abiturients.push({
+				specialtyId: s.id,
+				full_name: fullName,
+				score: score,
+				isEnrolled: score >= 4.0,
+			});
+		}
+	});
+
+	await prisma.abiturient.createMany({
+		data: abiturients,
+		skipDuplicates: true,
+	});
 
 	console.log('Seeding finished.');
 }

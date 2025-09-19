@@ -29,36 +29,46 @@ model News {
   img        String
   alt        String
   date       String
-  title      String
+  title      String   @unique
   text       String
-  slug       String
+  slug       String   @unique
   iso_date   String
   categories String[]
   content    String
 }
 
-model Enrolled {
-  id         Int    @id @default(autoincrement())
-  full_name  String
-  specialty  String
-  group_name String
+model Specialty {
+  id             Int             @id @default(autoincrement())
+  code           String // например "09.02.07"
+  name           String // название специальности
+  qualification  String // квалификация (например "Техник-программист")
+  durationMonths Int // срок обучения в месяцах
+  base           Int // база (после 9 или 11 классов)
+  form           String // очная / заочная
+  AdmissionPlan  AdmissionPlan[]
+  Abiturient     Abiturient[]
 }
 
-model Rating {
-  id        Int    @id @default(autoincrement())
-  full_name String
-  score     Int
-  specialty String
+model Abiturient {
+  id          Int       @id @default(autoincrement())
+  full_name   String
+  specialtyId Int
+  specialty   Specialty @relation(fields: [specialtyId], references: [id], onDelete: Cascade)
+  score       Float?
+  isEnrolled  Boolean   @default(false)
+}
+
+enum Funding {
+  BUDGET // бюджет
+  PAID // небюджет (платное)
 }
 
 model AdmissionPlan {
-  id            Int     @id @default(autoincrement())
-  specialty     String
-  qualification String
-  form          String
-  duration      String
-  budget_places Int
-  paid_places   Int
-  cost          Int
-  accreditation Boolean
+  id          Int       @id @default(autoincrement())
+  specialtyId Int
+  specialty   Specialty @relation(fields: [specialtyId], references: [id], onDelete: Cascade)
+  year        Int
+  funding     Funding
+  price       Int?
+  places      Int
 }

@@ -1,13 +1,51 @@
-.admin-page {
-	@apply flex min-h-screen flex-row gap-12 bg-gray-100 p-6 text-stone-700;
+.admin-wrapper {
+	@apply flex min-h-screen flex-row flex-nowrap bg-gray-50 text-gray-700;
+}
 
-	&__content {
-		@apply w-full py-4;
+.page {
+	@apply w-full overflow-hidden pt-12;
+
+	section {
+		@apply h-full pb-12;
+	}
+
+	.head {
+		@apply mb-12 flex flex-col px-8;
+		&__tools {
+			@apply flex flex-row items-center gap-4 overflow-auto rounded-lg;
+		}
+	}
+
+	.content {
+		@apply h-full overflow-x-auto px-8;
+
+		.table {
+			@apply w-full text-left text-sm text-gray-500;
+
+			thead {
+				@apply whitespace-nowrap bg-gray-200 text-xs uppercase text-gray-700;
+			}
+			th {
+				@apply px-6 py-3;
+			}
+			tbody {
+				tr {
+					@apply border-b border-gray-200 bg-white;
+				}
+				tr:nth-child(even) {
+					@apply bg-gray-50;
+				}
+
+				td {
+					@apply px-6 py-4;
+				}
+			}
+		}
 	}
 }
 
 h1 {
-	@apply mb-4 text-3xl font-medium;
+	@apply mb-8 text-3xl font-medium;
 }
 
 h2 {
@@ -19,10 +57,14 @@ h3 {
 }
 
 .aside {
-	@apply min-w-64 rounded-lg bg-white py-4 shadow-md;
+	@apply flex w-full max-w-80 flex-col gap-1 border-r border-white bg-gray-200 px-4 py-6;
+
+	a {
+		@apply flex rounded-md px-4 py-2 text-base transition-all duration-200 hover:bg-gray-300;
+	}
 
 	.router-link-exact-active {
-		@apply font-medium text-blue-600;
+		@apply !bg-gray-50 text-base font-medium text-stone-900;
 	}
 }
 
@@ -43,21 +85,13 @@ h3 {
 }
 
 .admin-btn {
-	@apply cursor-pointer rounded-lg bg-blue-500 px-3 py-2 text-sm font-medium text-neutral-100 transition-colors hover:bg-blue-700 active:bg-blue-800;
-
-	&.sm {
-		@apply px-3 py-2 text-sm;
-	}
+	@apply cursor-pointer rounded-md bg-gray-600 px-3 py-2 text-sm font-medium text-gray-50 transition-colors hover:bg-gray-800 active:bg-gray-900;
 
 	&.red {
 		@apply bg-red-400 hover:bg-red-500;
 	}
 }
 
-.head-tools {
-	@apply mb-12 flex flex-row items-center gap-4 overflow-auto rounded-lg;
-}
-
-.list-item-tools {
-	@apply mt-8 flex flex-col gap-2 border-t-2 border-gray-100 pt-4;
+.item-tools {
+	@apply flex flex-row flex-wrap items-center gap-2;
 }

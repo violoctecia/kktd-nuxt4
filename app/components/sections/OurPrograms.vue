@@ -1,5 +1,5 @@
 <template>
-	<section id="programs" class="container py-16 md:py-24">
+	<section id="programs" class="container">
 		<h2 class="h2">Наши программы</h2>
 		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-x-4 sm:gap-y-8 lg:grid-cols-3">
 			<MainCard

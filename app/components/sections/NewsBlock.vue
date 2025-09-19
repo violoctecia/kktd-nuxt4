@@ -29,7 +29,11 @@ const props = defineProps<{
 	h2: string;
 }>();
 
-const { data: newsItems } = await useFetch<NewsItem[]>(`/api/news?limit=${props.limit}`);
+const { data } = await useFetch<NewsItem[]>(`/news`, {
+	baseURL: useRuntimeConfig().public.backendUrl,
+});
+// лимит вынести на бэк
+const newsItems = data.value?.slice(0, props.limit);
 </script>
 
 <style scoped></style>

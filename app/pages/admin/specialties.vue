@@ -1,19 +1,18 @@
 <template>
-	<section>
+	<section class="h-full">
 		<div class="head">
-			<h1>Управление разделом "Вопросы и ответы"</h1>
+			<h1>Управление специальностями</h1>
 			<div class="head__tools">
-				<button class="admin-btn" @click="showCreateModal">Добавить вопрос</button>
+				<button class="admin-btn" @click="showCreateModal">Добавить специальность</button>
 				<button class="admin-btn" @click="refresh()">Перезагрузить список</button>
 			</div>
 		</div>
-
 		<div class="content">
 			<table class="table" v-if="data?.length && !pending">
 				<thead>
 					<tr>
 						<th scope="col" v-for="key in Object.keys(data?.[0] || {})" :key="key">
-							{{ dataKeyAliases[key as keyof Faq] }}
+							{{ dataKeyAliases[key as keyof Specialty] }}
 						</th>
 						<th scope="col">Управление</th>
 					</tr>
@@ -41,9 +40,8 @@
 </template>
 
 <script setup lang="ts">
-import type { Faq } from '#shared/types';
+import type { Specialty } from '#shared/types';
 import ModalUniversalCRUD from '~/components/admin/ModalUniversalCRUD.vue';
-import RichTextEditor from '~/components/admin/RIchTextEditor.vue';
 import LoadingSpinner from '~/components/LoadingSpinner.vue';
 import { useModalStore } from '~/store/modalsStore';
 
@@ -54,55 +52,71 @@ definePageMeta({
 	layout: 'admin',
 });
 
-const { data, error, pending, refresh } = await useFetch<Faq[]>(`${backendUrl}/faq`, {
+const { data, error, pending, refresh } = await useFetch<Specialty[]>(`${backendUrl}/specialties`, {
 	server: false,
 	lazy: true,
 });
 
-const dataKeyAliases: Record<keyof Faq, string> = {
+const dataKeyAliases: Record<keyof Specialty, string> = {
 	id: 'id',
-	question: 'Название вопроса',
-	content: 'Содержимое ответа',
+	code: 'Код специальности',
+	name: 'Название специальности',
+	qualification: 'Квалификация',
+	durationMonths: 'Срок обучения (мес.)',
+	base: 'База (класс)',
+	form: 'Форма обучения',
 };
 
 const modal = useModalStore();
 
 function showCreateModal() {
-	const item: Faq = {
-		question: '',
-		content: '',
+	const item: Specialty = {
+		code: '',
+		name: '',
+		qualification: '',
+		durationMonths: 4,
+		base: 9,
+		form: '',
 	};
 
 	modal.openModal(ModalUniversalCRUD, {
 		item,
 		mode: 'create',
-		endpoint: 'faq',
+		endpoint: 'specialties',
 		fieldAliases: dataKeyAliases,
 		fieldConfig: {
-			question: { type: 'text' },
-			content: { component: markRaw(RichTextEditor), props: { class: 'input' } },
+			durationMonths: { type: 'number' },
+			base: { type: 'number' },
+			code: { type: 'text' },
+			name: { type: 'text' },
+			qualification: { type: 'text' },
+			form: { type: 'text' },
 		},
 	});
 }
 
-function showEditModal(item: Faq) {
+function showEditModal(item: Specialty) {
 	modal.openModal(ModalUniversalCRUD, {
 		item,
 		mode: 'update',
-		endpoint: 'faq',
+		endpoint: 'specialties',
 		fieldAliases: dataKeyAliases,
 		fieldConfig: {
-			question: { type: 'text' },
-			content: { component: markRaw(RichTextEditor), props: { class: 'input' } },
+			durationMonths: { type: 'number' },
+			base: { type: 'number' },
+			code: { type: 'text' },
+			name: { type: 'text' },
+			qualification: { type: 'text' },
+			form: { type: 'text' },
 		},
 	});
 }
 
-function showDeleteModal(item: Faq) {
+function showDeleteModal(item: Specialty) {
 	modal.openModal(ModalUniversalCRUD, {
 		item,
 		mode: 'delete',
-		endpoint: 'faq',
+		endpoint: 'specialties',
 		fieldAliases: dataKeyAliases,
 	});
 }

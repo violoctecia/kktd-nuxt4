@@ -1,27 +1,27 @@
 <template>
 	<section>
 		<div class="head">
-			<h1>Управление разделом "Вопросы и ответы"</h1>
+			<h1>Управление планами приемов</h1>
 			<div class="head__tools">
-				<button class="admin-btn" @click="showCreateModal">Добавить вопрос</button>
+				<button class="admin-btn" @click="showCreateModal">Создать запись</button>
 				<button class="admin-btn" @click="refresh()">Перезагрузить список</button>
 			</div>
 		</div>
-
 		<div class="content">
 			<table class="table" v-if="data?.length && !pending">
 				<thead>
 					<tr>
 						<th scope="col" v-for="key in Object.keys(data?.[0] || {})" :key="key">
-							{{ dataKeyAliases[key as keyof Faq] }}
+							{{ dataKeyAliases[key as keyof AdmissionPlan] || key }}
 						</th>
 						<th scope="col">Управление</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr v-for="item in data" :key="item.id">
-						<td v-for="(i, idx) in item" :key="idx">{{ i }}</td>
-						<td class="">
+						<td v-for="(i, idx) in item" :key="idx">{{ i || '-' }}</td>
+
+						<td>
 							<div class="item-tools !flex-nowrap">
 								<button class="admin-btn" @click="showEditModal(item)">Редактировать</button>
 								<button class="admin-btn red" @click="showDeleteModal(item)">Удалить</button>
@@ -41,69 +41,79 @@
 </template>
 
 <script setup lang="ts">
-import type { Faq } from '#shared/types';
-import ModalUniversalCRUD from '~/components/admin/ModalUniversalCRUD.vue';
-import RichTextEditor from '~/components/admin/RIchTextEditor.vue';
+import type { AdmissionPlan } from '#shared/types';
 import LoadingSpinner from '~/components/LoadingSpinner.vue';
+import ModalUniversalCRUD from '~/components/admin/ModalUniversalCRUD.vue';
 import { useModalStore } from '~/store/modalsStore';
-
-const config = useRuntimeConfig();
-const backendUrl = config.public.backendUrl;
 
 definePageMeta({
 	layout: 'admin',
 });
 
-const { data, error, pending, refresh } = await useFetch<Faq[]>(`${backendUrl}/faq`, {
+const config = useRuntimeConfig();
+const backendUrl = config.public.backendUrl;
+
+const { data, error, pending, refresh } = await useFetch<AdmissionPlan[]>(`${backendUrl}/admission-plan`, {
 	server: false,
 	lazy: true,
 });
 
-const dataKeyAliases: Record<keyof Faq, string> = {
+const dataKeyAliases: Record<keyof AdmissionPlan, string> = {
 	id: 'id',
-	question: 'Название вопроса',
-	content: 'Содержимое ответа',
+	specialtyId: 'id специальности',
+	year: 'Год',
+	funding: 'Финансирование',
+	price: 'Цена ₽',
+	places: 'Кол-во мест',
 };
 
 const modal = useModalStore();
 
+const fieldConfig = {
+	specialtyId: { type: 'number' },
+	year: { type: 'number' },
+	funding: { type: 'text' },
+	price: { type: 'number' },
+	places: { type: 'number' },
+};
+
 function showCreateModal() {
-	const item: Faq = {
-		question: '',
-		content: '',
+	const item: AdmissionPlan = {
+		specialtyId: 0,
+		year: 2025,
+		funding: 'BUDGET',
+		price: 0,
+		places: 0,
 	};
 
 	modal.openModal(ModalUniversalCRUD, {
 		item,
 		mode: 'create',
-		endpoint: 'faq',
+		endpoint: 'admission-plan',
 		fieldAliases: dataKeyAliases,
-		fieldConfig: {
-			question: { type: 'text' },
-			content: { component: markRaw(RichTextEditor), props: { class: 'input' } },
-		},
+		fieldConfig,
 	});
 }
 
-function showEditModal(item: Faq) {
+function showEditModal(item: AdmissionPlan) {
 	modal.openModal(ModalUniversalCRUD, {
 		item,
 		mode: 'update',
-		endpoint: 'faq',
+		endpoint: 'admission-plan',
 		fieldAliases: dataKeyAliases,
-		fieldConfig: {
-			question: { type: 'text' },
-			content: { component: markRaw(RichTextEditor), props: { class: 'input' } },
-		},
+		fieldConfig,
 	});
 }
 
-function showDeleteModal(item: Faq) {
+function showDeleteModal(item: AdmissionPlan) {
 	modal.openModal(ModalUniversalCRUD, {
 		item,
 		mode: 'delete',
-		endpoint: 'faq',
+		endpoint: 'admission-plan',
 		fieldAliases: dataKeyAliases,
+		fieldConfig,
 	});
 }
 </script>
+
+<style scoped></style>

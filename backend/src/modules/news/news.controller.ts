@@ -2,9 +2,9 @@ import type { Request, Response } from 'express';
 import { cfg } from '../../config';
 import { NewsService } from './news.service';
 
-export const getById = async (req: Request, res: Response) => {
-	const { id } = req.params;
-	const item = await NewsService.getById(Number(id));
+export const getBySlug = async (req: Request, res: Response) => {
+	const { slug } = req.params;
+	const item = await NewsService.getBySlug(slug);
 	if (!item) {
 		return res.status(404).json({ message: 'New not found' });
 	}

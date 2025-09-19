@@ -1,27 +1,29 @@
 <template>
 	<section>
 		<div class="head">
-			<h1>Управление разделом "Вопросы и ответы"</h1>
+			<h1>Управление поступающими</h1>
 			<div class="head__tools">
-				<button class="admin-btn" @click="showCreateModal">Добавить вопрос</button>
+				<button class="admin-btn" @click="showCreateModal">Создать запись</button>
 				<button class="admin-btn" @click="refresh()">Перезагрузить список</button>
 			</div>
 		</div>
-
 		<div class="content">
 			<table class="table" v-if="data?.length && !pending">
 				<thead>
 					<tr>
 						<th scope="col" v-for="key in Object.keys(data?.[0] || {})" :key="key">
-							{{ dataKeyAliases[key as keyof Faq] }}
+							{{ dataKeyAliases[key as keyof Abiturient] || key }}
 						</th>
 						<th scope="col">Управление</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr v-for="item in data" :key="item.id">
-						<td v-for="(i, idx) in item" :key="idx">{{ i }}</td>
-						<td class="">
+						<td v-for="(value, key) in item" :key="String(key)">
+							{{ booleanAliases[String(key)]?.[String(value)] ?? value ?? '-' }}
+						</td>
+
+						<td>
 							<div class="item-tools !flex-nowrap">
 								<button class="admin-btn" @click="showEditModal(item)">Редактировать</button>
 								<button class="admin-btn red" @click="showDeleteModal(item)">Удалить</button>
@@ -41,69 +43,82 @@
 </template>
 
 <script setup lang="ts">
-import type { Faq } from '#shared/types';
-import ModalUniversalCRUD from '~/components/admin/ModalUniversalCRUD.vue';
-import RichTextEditor from '~/components/admin/RIchTextEditor.vue';
+import type { Abiturient } from '#shared/types';
 import LoadingSpinner from '~/components/LoadingSpinner.vue';
+import ModalUniversalCRUD from '~/components/admin/ModalUniversalCRUD.vue';
 import { useModalStore } from '~/store/modalsStore';
-
-const config = useRuntimeConfig();
-const backendUrl = config.public.backendUrl;
 
 definePageMeta({
 	layout: 'admin',
 });
 
-const { data, error, pending, refresh } = await useFetch<Faq[]>(`${backendUrl}/faq`, {
+const config = useRuntimeConfig();
+const backendUrl = config.public.backendUrl;
+
+const { data, error, pending, refresh } = await useFetch<Abiturient[]>(`${backendUrl}/abiturient`, {
 	server: false,
 	lazy: true,
 });
 
-const dataKeyAliases: Record<keyof Faq, string> = {
+const dataKeyAliases: Record<keyof Abiturient, string> = {
 	id: 'id',
-	question: 'Название вопроса',
-	content: 'Содержимое ответа',
+	full_name: 'ФИО',
+	specialtyId: 'id специльности',
+	score: 'Средний балл',
+	isEnrolled: 'Зачислен',
+};
+const booleanAliases: Record<string, Record<string, string>> = {
+	isEnrolled: { true: 'Да', false: 'Нет' },
 };
 
 const modal = useModalStore();
 
+const fieldConfig = {
+	full_name: { type: 'text' },
+	specialtyId: { type: 'number' },
+	score: { type: 'float' },
+	isEnrolled: {
+		type: 'checkbox',
+		labels: { true: 'Зачислен', false: 'Не зачислен' },
+	},
+};
+
 function showCreateModal() {
-	const item: Faq = {
-		question: '',
-		content: '',
+	const item: Abiturient = {
+		full_name: '',
+		specialtyId: 0,
+		score: 0,
+		isEnrolled: false,
 	};
 
 	modal.openModal(ModalUniversalCRUD, {
 		item,
 		mode: 'create',
-		endpoint: 'faq',
+		endpoint: 'abiturient',
 		fieldAliases: dataKeyAliases,
-		fieldConfig: {
-			question: { type: 'text' },
-			content: { component: markRaw(RichTextEditor), props: { class: 'input' } },
-		},
+		fieldConfig,
 	});
 }
 
-function showEditModal(item: Faq) {
+function showEditModal(item: Abiturient) {
 	modal.openModal(ModalUniversalCRUD, {
 		item,
 		mode: 'update',
-		endpoint: 'faq',
+		endpoint: 'abiturient',
 		fieldAliases: dataKeyAliases,
-		fieldConfig: {
-			question: { type: 'text' },
-			content: { component: markRaw(RichTextEditor), props: { class: 'input' } },
-		},
+		fieldConfig,
 	});
 }
 
-function showDeleteModal(item: Faq) {
+function showDeleteModal(item: Abiturient) {
 	modal.openModal(ModalUniversalCRUD, {
 		item,
 		mode: 'delete',
-		endpoint: 'faq',
+		endpoint: 'abiturient',
 		fieldAliases: dataKeyAliases,
+		fieldConfig,
 	});
 }
 </script>
+
+<style scoped></style>

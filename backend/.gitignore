@@ -25,6 +25,7 @@ logs
 
 /src/generated/prisma
 
-/uploads
+/uploads/*
 !/uploads/seed
+!/uploads/seed/**
 

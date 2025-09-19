@@ -22,36 +22,33 @@ export interface FaqItem {
 	content: string;
 }
 
-export interface EnrolledItem {
-	id?: number;
-	full_name: string;
-	fio?: string;
-	birthDate?: string | null;
-	speciality: string;
-	group_name?: string | null;
-	status?: string | null;
-	documents?: Record<string, any> | null;
-}
+export type Funding = 'BUDGET' | 'PAID';
 
-export interface AdmissionPlanItem {
+export interface AdmissionPlan {
 	id?: number;
-	speciality: string;
-	qualification?: string | null;
-	form: string;
-	duration?: string | null;
-	budget_places?: number;
-	paid_places?: number;
-	cost?: number | null;
-	accreditation?: string | null;
-	extras?: Record<string, any> | null;
-}
-
-export interface RatingItem {
-	id?: number;
-	full_name: string;
-	fio?: string;
-	speciality: string;
-	score: number;
+	specialtyId: number;
 	year: number;
-	extra?: Record<string, any> | null;
+	funding: Funding;
+	price?: number;
+	places: number;
+}
+
+export interface Abiturient {
+	id?: number;
+	full_name: string;
+	specialtyId: number;
+	score?: number;
+	isEnrolled?: boolean;
+}
+
+export interface Specialty {
+	id?: number;
+	code: string;
+	name: string;
+	qualification: string;
+	durationMonths: number;
+	base: number;
+	form: string;
+	AdmissionPlan?: AdmissionPlan[];
+	Abiturient?: Abiturient[];
 }

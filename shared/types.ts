@@ -20,6 +20,35 @@ export interface Faq {
 }
 
 export interface About {
-	id: number;
+	id?: number;
 	content: string;
+}
+
+export interface Specialty {
+	id?: number;
+	code: string;
+	name: string;
+	qualification: string;
+	durationMonths: number;
+	base: number;
+	form: string;
+}
+
+type Funding = 'BUDGET' | 'PAID';
+
+export interface AdmissionPlan {
+	id?: number;
+	specialtyId: number;
+	year: number;
+	funding: Funding;
+	price?: number;
+	places: number;
+}
+
+export interface Abiturient {
+	id?: number;
+	full_name: string;
+	specialtyId: number;
+	score?: number;
+	isEnrolled?: boolean;
 }

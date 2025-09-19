@@ -1,8 +1,14 @@
 import type { Request, Response } from 'express';
 import { AdmissionPlanService } from './admissionPlan.service';
 
-export const getAdmissionPlan = async (_req: Request, res: Response) => {
-	const items = await AdmissionPlanService.getAll();
+export const getAdmissionPlan = async (req: Request, res: Response) => {
+	const { year, specialtyId } = req.query;
+
+	const filter: any = {};
+	if (year) filter.year = Number(year);
+	if (specialtyId) filter.specialtyId = Number(specialtyId);
+
+	const items = await AdmissionPlanService.getAll(Object.keys(filter).length ? filter : undefined);
 	res.json(items);
 };
 

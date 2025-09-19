@@ -2,11 +2,10 @@
 	<div>
 		<HeroBlock />
 		<NewsBlock :limit="3" h2="Новости и события" />
-		<AboutBlock />
-		<OurAdvantages />
-		<OurPrograms />
+		<OurPrograms class="mb-12 md:mb-24" />
+		<OurAdvantages class="mb-12 md:mb-24" />
+		<AboutBlock class="mb-12 md:mb-24" />
 		<MapSection />
-		<!-- TODO: блок с контактами + карта -->
 	</div>
 </template>
 

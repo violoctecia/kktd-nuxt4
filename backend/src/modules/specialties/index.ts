@@ -1,13 +1,12 @@
 import { Router } from 'express';
 import { authMiddleware } from '../../middleware/auth';
-import { create, getAll, getById, remove, update } from './enrolled.controller';
+import { create, getAll, remove, update } from './specialties.controller';
 
 const router = Router();
 
 router.get('/', getAll);
-router.get('/:id', getById);
 router.post('/', authMiddleware, create);
 router.put('/:id', authMiddleware, update);
 router.delete('/:id', authMiddleware, remove);
 
-export const enrolledRoutes = router;
+export const specialtiesRoutes = router;

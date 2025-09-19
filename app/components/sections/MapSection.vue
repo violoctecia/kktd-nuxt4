@@ -1,8 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
-	<section class="map-section container mx-auto px-4 py-12">
-		<h2 class="section-title mb-8 text-center text-2xl font-bold">Мы находимся</h2>
+	<section class="map-section container">
+		<h2 class="h2 !text-center">Мы находимся</h2>
 
 		<div class="map-container relative h-[450px] w-full overflow-hidden rounded-xl shadow-lg">
 			<iframe

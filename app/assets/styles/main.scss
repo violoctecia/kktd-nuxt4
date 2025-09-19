@@ -24,7 +24,7 @@ body {
 }
 
 .h2 {
-	@apply mb-8 text-start text-2xl font-medium text-black md:mb-12 md:text-3xl;
+	@apply mb-6 text-start text-2xl font-medium text-black md:mb-8 md:text-3xl;
 }
 
 .gs {
@@ -58,5 +58,12 @@ body {
 
 	a {
 		@apply text-blue-400;
+	}
+
+	& > :first-child {
+		@apply mt-0;
+	}
+	& > :last-child {
+		@apply mb-0;
 	}
 }

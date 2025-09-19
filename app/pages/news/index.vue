@@ -4,8 +4,9 @@
 		<section>
 			<h1 class="h1">Новости колледжа</h1>
 			<!--TODO: сортировака по категориям	-->
-			<NewsList v-if="newsItems" :items="newsItems" tag="h2" />
-			<p v-else>Новостей пока нет</p>
+			<NewsList v-if="newsItems?.length" :items="newsItems" tag="h2" />
+			<p v-if="error">Что-то пошло не так... Попробуйте ещё раз немного позже.</p>
+			<p v-else-if="!newsItems?.length">Новостей пока нет</p>
 		</section>
 	</div>
 </template>
@@ -21,5 +22,7 @@ useHead({
 
 const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'Новости колледжа' }];
 
-const { data: newsItems } = await useFetch<NewsItem[]>('/api/news');
+const { data: newsItems, error } = await useFetch<NewsItem[]>('/news', {
+	baseURL: useRuntimeConfig().public.backendUrl,
+});
 </script>

@@ -16,8 +16,8 @@ const apply = () => {
 </script>
 
 <template>
-	<div class="mb-6 rounded-lg bg-white p-6 shadow-lg">
-		<h3 class="mb-4 text-xl text-blue-700">План приема</h3>
+	<section class="rounded-lg bg-gray-100 p-6 shadow-lg">
+		<h2 class="h2">План приема</h2>
 
 		<div v-if="pending" class="p-4 text-center text-gray-500">Загружаем данные...</div>
 
@@ -26,15 +26,15 @@ const apply = () => {
 		<div v-else-if="!tableData || tableData.length === 0" class="p-4 text-center text-gray-500">Данные отсутствуют.</div>
 
 		<div v-else class="overflow-x-auto rounded-lg shadow-lg">
-			<table class="w-full min-w-[800px] border-collapse">
+			<table class="w-full border-collapse">
 				<thead>
 					<tr class="bg-blue-900 text-white">
-						<th class="p-3">Источник финансирования</th>
-						<th class="p-3">Специальность/профессия</th>
-						<th class="p-3">Квалификация</th>
-						<th class="p-3">База (классы)</th>
-						<th class="p-3">Форма</th>
-						<th class="p-3">Мест</th>
+						<th class="p-3 text-start">Источник финансирования</th>
+						<th class="p-3 text-start">Специальность/профессия</th>
+						<th class="p-3 text-start">Квалификация</th>
+						<th class="p-3 text-start">База (классы)</th>
+						<th class="p-3 text-start">Форма</th>
+						<th class="p-3 text-start">Мест</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -63,5 +63,5 @@ const apply = () => {
 		<button @click="apply" class="mt-6 rounded bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700">
 			Подать заявку
 		</button>
-	</div>
+	</section>
 </template>
